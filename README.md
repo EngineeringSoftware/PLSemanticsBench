@@ -1,7 +1,6 @@
 # PLSemanticsBench
 
 [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-Dataset-blue)](https://huggingface.co/datasets/EngineeringSoftware/PLSemanticsBench)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
 ## Table of Contents
