@@ -59,7 +59,7 @@ from plsemanticsbench import (
 )
 
 # Model name
-model_name = "gpt-5-mini"
+model_name = "o3-mini"
 
 # Experiment args: Run the PredState task on the IMP language with
 # standard semantics formalized using SOS and with direct prompting
