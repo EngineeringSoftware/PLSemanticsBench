@@ -12,13 +12,15 @@
 - [Citation](#citation)
 
 ## About
-PLSemanticsBench is a benchmark for evaluating LLMs as programming language interpreters. We introduce three tasks to evaluate this:
+PLSemanticsBench is the first benchmark for evaluating LLMs as programming language interpreters. We introduce three tasks to evaluate this:
 
 | Task | Description |
 |------|-------------|
 | ✨ **PredState**| Predicts the final program state |
 | ✨ **PredRule** | Predicts the ordered sequence of semantic rules needed to evaluate a program|
 | ✨ **PredTrace**| Predicts the step-by-step execution of a program |
+
+PLSemanticsBench is hosted on HuggingFace: [PLSemanticsBench](https://huggingface.co/datasets/EngineeringSoftware/PLSemanticsBench). 
 
 ## Installation
 
