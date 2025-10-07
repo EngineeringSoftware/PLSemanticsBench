@@ -206,7 +206,9 @@ One example of the dataset is as follows:
 @article{ThimmaiahETAL25PLSemanticsBench,
   title={PLSemanticsBench: Large Language Models As Programming Language Interpreters},
   author={Aditya Thimmaiah, Jiyang Zhang, Jayanth Srinivasa, Junyi Jessy Li, Milos Gligoric},
-  year={2025}
+  year={2025},
+  archivePrefix={arXiv},
+  url={https://arxiv.org/abs/2510.03415}, 
 }
 ```
 
