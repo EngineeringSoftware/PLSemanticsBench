@@ -28,11 +28,13 @@ class BaseRunner(ABC):
     def do_experiment(self, result_file: str = None):
         dataset: List = self.load_dataset()
         results = self.run(dataset)
+        # Always save in JSONL format
+        if not isinstance(results, list):
+            results = [results]
+        #fi
         if result_file:
             with open(result_file, "w") as f:
-                for result in results:
-                    f.write(json.dumps(result) + "\n")
-                #rof
+                json.dump(results, f)
             #htiw
         #fi
         return results

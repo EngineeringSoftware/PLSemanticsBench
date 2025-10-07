@@ -10,9 +10,10 @@ from ..utils.output_parser import (
     parse_predrule_xml,
     parse_predtrace_xml,
     extract_content_between_tags,
+    TaskParseError
 )
 
-from .exps.experiment_args import Task, Semantics_Type, ExperimentArgs
+from .exps.experiment_args import Task, Semantics_Type
 
 @dataclass
 class PredStateResults:
@@ -37,9 +38,9 @@ class PredTraceResults:
 
 class LLMEvaluator:
 
-    def __init__(self, exp_args: ExperimentArgs):
-        self.task = exp_args.task
-        self.semantics_type = exp_args.semantics_type
+    def __init__(self, task: Task, semantics_type: Semantics_Type):
+        self.task = task
+        self.semantics_type = semantics_type
         self.PROCESSING_FUNCTION_MAP: dict = {
         "predstate-nk": (self._analyze_predstate_uk, [self._evaluate_predstate_task, self.handle_standard_results]),
         "predstate-uk": (self._analyze_predstate_uk, [self._evaluate_predstate_task, self.handle_standard_results]),
@@ -54,11 +55,10 @@ class LLMEvaluator:
     def evaluate_from_file(self, prediction_file: str, model_name: str) -> dict:
         results = []
         with open(prediction_file, 'r') as f:
-            for line in f:
-                results.append(json.loads(line))
-            #rof
+            # Must be in JSONL format
+            results = json.load(f)
         #htiw
-        self.evaluate_from_list(results, model_name)
+        return self.evaluate_from_list(results, model_name)
     #fed
 
     def evaluate_from_list(self, results: List, model_name: str) -> dict:

@@ -1,0 +1,41 @@
+#!/bin/bash
+
+ENV_NAME="plsemanticsbench"
+MODEL="deepseek-r1:1.5b"
+
+# 1) Create plsemanticsbench env if missing
+if ! conda env list | awk '{print $1}' | grep -qx "$ENV_NAME"; then
+  conda env create -f "env.yaml"
+else
+  echo "conda env plsemanticsbench already exists. Skipping creation..."
+fi
+
+# 2) Make sure Ollama is up and running
+if ! curl -fsS "http://127.0.0.1:11434/api/version" >/dev/null; then
+  echo "Starting Ollama server..."
+  nohup ollama serve > /tmp/ollama-serve.log 2>&1 &
+  for i in $(seq 1 "$WAIT_SECS"); do
+    curl -fsS "http://$OL_HOST/api/version" >/dev/null && { echo "Ollama is up."; break; }
+    sleep 1
+  done
+  curl -fsS "http://$OL_HOST/api/version" >/dev/null || {
+    echo "Failed to start Ollama. See /tmp/ollama-serve.log" >&2
+    exit 1
+  }
+fi
+
+# 3) Pull DeepSeek-R1 1.5B model if necessary
+if ! ollama list 2>/dev/null | awk 'NR>1{print $1}' | grep -Fxq "$MODEL"; then
+  echo "Pulling model: $MODEL"
+  ollama pull "$MODEL"
+else
+  echo "Model already present: $MODEL"
+fi
+
+# 4) Predict with DeepSeek-R1 1.5B model
+printf "\n\nStarting prediction....\n"
+conda run -n "$ENV_NAME" --no-capture-output python -m src.plsemanticsbench gen -m $MODEL -u Ollama -t predstate -l IMP -f None -s nk -d human-written -p cot -n 2 -r test.jsonl
+
+# 5) Evaluate DeepSeek-R1 1.5B model prediction against ground-truth
+printf "\n\nEvaluating...\n"
+conda run -n "$ENV_NAME" --no-capture-output python -m src.plsemanticsbench eval -p test.jsonl -t predstate -s nk -m $MODEL -v

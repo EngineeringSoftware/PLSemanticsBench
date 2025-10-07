@@ -7,6 +7,7 @@
 - [About](#about)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
+- [Detailed Usage](#detailed-usage)
 - [Benchmark](#benchmark)
 - [Citation](#citation)
 
@@ -40,14 +41,26 @@ conda activate plsemanticsbench
 export OPENAI_API_KEY='your-api-key-here'
 ```
 
-
 ## Quick Start
+
+We provide a bash script `quick` that:
+ 1. Sets up the `plsemanticsbench` conda environment.
+ 2. Pulls the `DeepSeek-R1 1.5B` model.
+ 3. Evaluates the `DeepSeek-R1 1.5B` model on the `PredState` task with `no-semantics` and `chain-of-thought` prompting on the `Human-Written` dataset.
+ 4. Prints the `accuracy` and `malformed-count` to screen.
+ 5. Creates `metrics-predstate-deepseek-r1:1.5b.json` that contains the evaluation result.
+ 
+```bash
+bash quick
+```
+
+## Detailed Usage
 
 ### Basic Example
 Here's a minimal example to get started:
 
 ```python
-from plsemanticsbench import GPTRunner, GPT_MODEL_ENUM
+from plsemanticsbench import GPTRunner
 from plsemanticsbench import ExperimentArgs, LLMEvaluator
 from plsemanticsbench import (
     PROMPT_STRATEGY,
@@ -75,21 +88,19 @@ exp_args = ExperimentArgs(
 )
                         
 # Run inference using the OpenAI API
-gpt_runner = GPTRunner(
-    gpt_model=GPT_MODEL_ENUM.O3_MINI,
-    args=exp_args,
-)
+gpt_runner = GPTRunner(args=exp_args)
 
-# If prediction file is provided, the predictions will be saved to the file
-predictions = gpt_runner.do_experiment()
-llm_eval = LLMEvaluator(exp_args)
+# Generation (generate LLM prediction on the predstate task)
+predictions = gpt_runner.do_experiment() # path to dump results can be provided
+
+# Evaluation (evaluate LLM prediction against ground-truth)
+llm_eval = LLMEvaluator(task=exp_args.task, semantics_type=exp_args.semantics_type)
 evaluation_result = llm_eval.evaluate_from_list(results=predictions, model_name=model_name)
 print(evaluation_result)
 ```
 
 ### Expected Output
 
-The evaluation results will look like:
 ```python
 {
     'accuracy': 1,
@@ -215,4 +226,4 @@ One example of the dataset is as follows:
 
 
 ## License
-This project is licensed under the CC0-1.0 License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the [CC BY 4.0 License](https://creativecommons.org/licenses/by/4.0/).

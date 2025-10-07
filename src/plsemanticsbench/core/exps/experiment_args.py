@@ -9,6 +9,16 @@ class ConfigError(Exception):
     #fed
 #fed
 
+def to_exp_enum(enum_cls, enum_str: str):
+    for enum_enum in enum_cls:
+        if enum_enum.value == enum_str:
+            return enum_enum
+        #fi
+    #rof    
+    raise ConfigError(f"Invalid {enum_cls.__name__} setting {enum_str}")
+#fed
+
+
 class Language(StrEnum):
     IMP = "IMP"
 #ssalc
@@ -57,6 +67,30 @@ class ExperimentArgs:
         self.model_name = model_name
         self.language = language
         self.num_datapoints_to_run = num_datapoints_to_run
+    #fed
+
+    @classmethod
+    def from_str(
+        cls,
+        task: str,
+        formalization: str,
+        semantics_type: str,
+        dataset: str,
+        prompt_strategy: str,
+        model_name: str,
+        language: str,
+        num_datapoints_to_run: int = -1,            
+    ):
+        return ExperimentArgs(
+            task=to_exp_enum(Task, task),
+            formalization=to_exp_enum(Formalization, formalization),
+            semantics_type=to_exp_enum(Semantics_Type, semantics_type),
+            dataset=to_exp_enum(PLDataset, dataset),
+            prompt_strategy=to_exp_enum(PROMPT_STRATEGY, prompt_strategy),
+            model_name=model_name,
+            language=to_exp_enum(Language, language),
+            num_datapoints_to_run=num_datapoints_to_run,
+        )
     #fed
 
     def __str__(self):
