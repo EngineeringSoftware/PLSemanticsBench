@@ -204,7 +204,7 @@ One example of the dataset is as follows:
 ## Citation
 ```bibtex
 @article{ThimmaiahETAL25PLSemanticsBench,
-  title={PLSEMANTICSBENCH: Large Language Models As Programming Language Interpreters},
+  title={PLSemanticsBench: Large Language Models As Programming Language Interpreters},
   author={Aditya Thimmaiah, Jiyang Zhang, Jayanth Srinivasa, Junyi Jessy Li, Milos Gligoric},
   year={2025}
 }
