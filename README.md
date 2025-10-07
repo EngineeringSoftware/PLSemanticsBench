@@ -20,13 +20,15 @@ PLSemanticsBench is the first benchmark for evaluating LLMs as programming langu
 | ✨ **PredRule** | Predicts the ordered sequence of semantic rules needed to evaluate a program|
 | ✨ **PredTrace**| Predicts the step-by-step execution of a program |
 
-PLSemanticsBench is hosted on HuggingFace: [PLSemanticsBench](https://huggingface.co/datasets/EngineeringSoftware/PLSemanticsBench). 
+PLSemanticsBench is hosted on HuggingFace: [PLSemanticsBench](https://huggingface.co/datasets/EngineeringSoftware/PLSemanticsBench).
+
+You must implement [BaseRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/base_experiment.py) to evaluate your models. We provide two example implementations for OpenAI models ([GPTRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/gpt_experiment.py)) and Ollama models ([OllamaRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/ollama_experiment.py)).
 
 ## Installation
 
 ### System Requirements
 - Python 3.11 or higher
-- OpenAI API key (for running experiments)
+- OpenAI API key (for running experiments with OpenAI models)
 
 
 ### Step-by-Step Installation
@@ -36,7 +38,7 @@ conda env create -f env.yaml
 conda activate plsemanticsbench
 ```
 
-2. Set up your OpenAI API key:
+2. Set up your OpenAI API key (only for OpenAI models):
 ```bash
 export OPENAI_API_KEY='your-api-key-here'
 ```
