@@ -1,5 +1,6 @@
 import os
 import yaml
+from typing import List
 from openai import OpenAI
 from .base_experiment import BaseRunner
 
@@ -25,11 +26,7 @@ class GPTRunner(BaseRunner):
         )
     #fed
 
-    def _query(
-        self,
-        chat: list[dict],
-        stop: list[str] = [],
-    ) -> list[str]:
+    def _query(self, chat: List[dict]) -> List[str]:
         try:
             completion_kwargs = {
                 "model": self.args.model_name,

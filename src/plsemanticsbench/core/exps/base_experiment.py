@@ -1,7 +1,7 @@
-from typing import List, Any
 import re
 import json
-from abc import ABC
+from typing import List
+from abc import ABC, abstractmethod
 from tqdm import tqdm
 from datasets import load_dataset
 
@@ -23,6 +23,12 @@ class BaseRunner(ABC):
             },
         ]
         print(f"Querying model: {args.model_name}")
+    #fed
+
+    @abstractmethod
+    def _query(self, chat: List[dict]) -> List[str]:
+        """Must be implemented in inherited classes"""
+        pass
     #fed
 
     def do_experiment(self, result_file: str = None):

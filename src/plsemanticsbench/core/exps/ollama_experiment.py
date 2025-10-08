@@ -1,4 +1,5 @@
 import requests
+from typing import List
 from .base_experiment import BaseRunner
 
 class OllamaRunner(BaseRunner):
@@ -32,11 +33,7 @@ class OllamaRunner(BaseRunner):
         #yrt
     #fed
     
-    def _query(
-        self,
-        chat: list[dict],
-        stop: list[str] = [],
-    ) -> list[str]:
+    def _query(self, chat: List[dict]) -> List[str]:
         try:
             # Convert chat format to Ollama format
             messages = []
@@ -45,13 +42,6 @@ class OllamaRunner(BaseRunner):
                     {"role": message["role"], "content": message["content"]}
                 )
             #rof
-            # # Prepare the request payload for Ollama API
-            # if "temperature" not in self.model_config:
-            #     raise ValueError("temperature not found in model config")
-            # #fi
-            # if "max_completion_tokens" not in self.model_config:
-            #     raise ValueError("max_completion_tokens not found in model config")
-            # #fi
             payload = {
                 "model": self.args.model_name,
                 "messages": messages,
@@ -59,9 +49,6 @@ class OllamaRunner(BaseRunner):
                 "options": self.model_config,
             }
 
-            if stop:
-                payload["options"]["stop"] = stop
-            #fi
             # Make the API call to Ollama
             response = requests.post(f"{self.ollama_base_url}/api/chat", json=payload)
 

@@ -22,7 +22,7 @@ PLSemanticsBench is the first benchmark for evaluating LLMs as programming langu
 
 PLSemanticsBench is hosted on HuggingFace: [PLSemanticsBench](https://huggingface.co/datasets/EngineeringSoftware/PLSemanticsBench).
 
-You must implement [BaseRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/base_experiment.py) to evaluate your models. We provide two example implementations for OpenAI models ([GPTRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/gpt_experiment.py)) and Ollama models ([OllamaRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/ollama_experiment.py)).
+You must implement [BaseRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/base_experiment.py)(`_query` method) to evaluate your models. We provide two example implementations for OpenAI models ([GPTRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/gpt_experiment.py)) and Ollama models ([OllamaRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/ollama_experiment.py)).
 
 ## Installation
 
