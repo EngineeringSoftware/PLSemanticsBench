@@ -27,6 +27,7 @@ You must implement [BaseRunner](https://github.com/EngineeringSoftware/PLSemanti
 ## Installation
 
 ### System Requirements
+- [Conda](https://docs.conda.io/projects/conda/en/stable/user-guide/install/index.html) package management system
 - Python 3.11 or higher
 - OpenAI API key (for running experiments with OpenAI models)
 
