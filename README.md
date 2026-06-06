@@ -218,12 +218,11 @@ One example of the dataset is as follows:
 
 ## Citation
 ```bibtex
-@article{ThimmaiahETAL25PLSemanticsBench,
-  title={PLSemanticsBench: Large Language Models As Programming Language Interpreters},
-  author={Aditya Thimmaiah, Jiyang Zhang, Jayanth Srinivasa, Junyi Jessy Li, Milos Gligoric},
-  year={2025},
-  archivePrefix={arXiv},
-  url={https://arxiv.org/abs/2510.03415}, 
+@inproceedings{ThimmaiahETAL25PLSemanticsBench,
+  title     = {LLMs Lean on Priors, Not Programming Language Semantics},
+  author    = {Aditya Thimmaiah, Jiyang Zhang, Jayanth Srinivasa, Junyi Jessy Li, Milos Gligoric},
+  year      = {2026},
+  booktitle = {ICML}, 
 }
 ```
 
