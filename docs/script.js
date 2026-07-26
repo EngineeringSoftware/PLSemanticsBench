@@ -55,7 +55,7 @@ function updateSemantics() {
   if (
     !leftInput || !rightInput || !operatorEl || !ruleDescription ||
     !rulePremise || !ruleConclusion || !semanticAnswer ||
-    !priorAnswer || !priorStatus || !trace
+    !priorAnswer || !priorStatus
   ) {
     return;
   }
@@ -78,12 +78,14 @@ function updateSemantics() {
   priorStatus.classList.toggle("bad", !matches);
   priorStatus.classList.toggle("neutral", matches);
 
-  trace.innerHTML = `
-    <div class="trace-step active"><span>01</span><code>parse x = (${a} ${mode.operator} ${b})</code></div>
-    <div class="trace-step"><span>02</span><code>select ${mode.ruleName}</code></div>
-    <div class="trace-step"><span>03</span><code>${mode.commit(semantic)}</code></div>
-  `;
-  traceIndex = 0;
+  if (trace) {
+    trace.innerHTML = `
+      <div class="trace-step active"><span>01</span><code>parse x = (${a} ${mode.operator} ${b})</code></div>
+      <div class="trace-step"><span>02</span><code>select ${mode.ruleName}</code></div>
+      <div class="trace-step"><span>03</span><code>${mode.commit(semantic)}</code></div>
+    `;
+    traceIndex = 0;
+  }
 }
 
 document.querySelectorAll(".semantics-tab").forEach((tab) => {
