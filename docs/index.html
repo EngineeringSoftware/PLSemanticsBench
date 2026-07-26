@@ -110,7 +110,7 @@
       </div>
     </section>
 
-    <section class="section finding-section" id="problem">
+    <section class="section approach-section" id="problem">
       <div class="shell">
         <div class="section-heading">
           <div>
@@ -325,7 +325,7 @@
       </div>
     </section>
 
-    <section class="section benchmark-section" id="benchmark">
+    <section class="section approach-section" id="benchmark">
       <div class="shell">
         <div class="section-heading">
           <p class="eyebrow">PLSemanticsBench</p>
@@ -460,89 +460,91 @@
       </div>
     </section>
 
-    <section class="section shell" id="results">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Results</p>
-          <h2>High standard accuracy hides brittle semantic conditioning.</h2>
-        </div>
-        <p>
-          Explore published results across tasks, program complexity, formalization, and semantic condition. The most
-          revealing contrast is not which model scores highest, but how much accuracy survives when symbol meanings shift.
-        </p>
-      </div>
-
-      <div class="results-card">
-        <div class="result-controls">
-          <label>
-            Task
-            <select id="task-select">
-              <option value="state">PredState · final states</option>
-              <option value="rule">PredRule · rule selection</option>
-              <option value="trace">PredTrace · full traces</option>
-            </select>
-          </label>
-          <label>
-            Dataset
-            <select id="dataset-select">
-              <option value="human">Human-Written</option>
-              <option value="translated">LLM-Translated</option>
-              <option value="fuzzer">Fuzzer-Generated</option>
-            </select>
-          </label>
-          <label>
-            Formalization
-            <select id="formalization-select">
-              <option value="k">K semantics</option>
-              <option value="s">Small-step semantics</option>
-            </select>
-          </label>
-          <div class="legend" id="chart-legend" aria-label="Chart legend">
-            <span><i class="na"></i>No semantics</span>
-            <span><i class="std"></i>Standard</span>
-            <span><i class="swap"></i>KeywordSwap</span>
-            <span><i class="obf"></i>KeywordObf</span>
-          </div>
-        </div>
-
-        <div class="chart-header">
+    <section class="section approach-section" id="results">
+      <div class="shell">
+        <div class="section-heading">
           <div>
-            <p class="micro-label" id="chart-metric">PredState · exact-match accuracy (%)</p>
-            <h3 id="chart-title">Human-Written · K semantics</h3>
+            <p class="eyebrow">Results</p>
+            <h2>High standard accuracy hides brittle semantic conditioning.</h2>
           </div>
-          <p id="chart-note">The swap condition creates a direct conflict between familiar symbols and supplied meanings.</p>
+          <p>
+            Explore published results across tasks, program complexity, formalization, and semantic condition. The most
+            revealing contrast is not which model scores highest, but how much accuracy survives when symbol meanings shift.
+          </p>
         </div>
 
-        <div id="bar-chart" class="bar-chart" aria-label="Interactive model accuracy chart"></div>
+        <div class="results-card">
+          <div class="result-controls">
+            <label>
+              Task
+              <select id="task-select">
+                <option value="state">PredState · final states</option>
+                <option value="rule">PredRule · rule selection</option>
+                <option value="trace">PredTrace · full traces</option>
+              </select>
+            </label>
+            <label>
+              Dataset
+              <select id="dataset-select">
+                <option value="human">Human-Written</option>
+                <option value="translated">LLM-Translated</option>
+                <option value="fuzzer">Fuzzer-Generated</option>
+              </select>
+            </label>
+            <label>
+              Formalization
+              <select id="formalization-select">
+                <option value="k">K semantics</option>
+                <option value="s">Small-step semantics</option>
+              </select>
+            </label>
+            <div class="legend" id="chart-legend" aria-label="Chart legend">
+              <span><i class="na"></i>No semantics</span>
+              <span><i class="std"></i>Standard</span>
+              <span><i class="swap"></i>KeywordSwap</span>
+              <span><i class="obf"></i>KeywordObf</span>
+            </div>
+          </div>
 
-        <div class="result-insight">
-          <span class="insight-mark" aria-hidden="true">!</span>
-          <p id="result-insight-text"><strong>Semantic gap:</strong> Several models approach ceiling accuracy under standard semantics yet lose tens of percentage points when operator meanings are swapped.</p>
+          <div class="chart-header">
+            <div>
+              <p class="micro-label" id="chart-metric">PredState · exact-match accuracy (%)</p>
+              <h3 id="chart-title">Human-Written · K semantics</h3>
+            </div>
+            <p id="chart-note">The swap condition creates a direct conflict between familiar symbols and supplied meanings.</p>
+          </div>
+
+          <div id="bar-chart" class="bar-chart" aria-label="Interactive model accuracy chart"></div>
+
+          <div class="result-insight">
+            <span class="insight-mark" aria-hidden="true">!</span>
+            <p id="result-insight-text"><strong>Semantic gap:</strong> Several models approach ceiling accuracy under standard semantics yet lose tens of percentage points when operator meanings are swapped.</p>
+          </div>
+          <p class="data-note">Values reported in Tables 4–6 of the paper (one-shot prompting; reasoning-model results averaged over three runs, std. dev. ≤ 5.2 points). Only models reported for the selected split/task are shown.</p>
         </div>
-        <p class="data-note">Values reported in Tables 4–6 of the paper (one-shot prompting; reasoning-model results averaged over three runs, std. dev. ≤ 5.2 points). Only models reported for the selected split/task are shown.</p>
-      </div>
 
-      <div class="findings-grid">
-        <article>
-          <span class="finding-index">01</span>
-          <h3>Rules help reasoning models—until the symbols fight back.</h3>
-          <p>Supplying formal semantics lifts reasoning models by 9–16 points under standard semantics, but most non-reasoning models actually degrade when given the rules.</p>
-        </article>
-        <article>
-          <span class="finding-index">02</span>
-          <h3>Redefining a familiar symbol is far harder than defining a new one.</h3>
-          <p>KeywordSwap causes 40–70-point drops where KeywordObf causes modest ones. Conflict with priors—not unfamiliarity—is what breaks models.</p>
-        </article>
-        <article>
-          <span class="finding-index">03</span>
-          <h3>Structural complexity overwhelms rule composition.</h3>
-          <p>Moving to fuzzer-generated programs collapses accuracy by 40+ points even under standard semantics. Loop nesting depth, data-flow degree, and trace length are the strongest predictors of failure.</p>
-        </article>
-        <article>
-          <span class="finding-index">04</span>
-          <h3>Full-trace conditioning is nearly absent.</h3>
-          <p>Only 4 of 11 models achieve any non-zero PredTrace accuracy; the best result is 35%. Most models cannot stay grounded in the rules for dozens of steps.</p>
-        </article>
+        <div class="findings-grid">
+          <article>
+            <span class="finding-index">01</span>
+            <h3>Rules help reasoning models—until the symbols fight back.</h3>
+            <p>Supplying formal semantics lifts reasoning models by 9–16 points under standard semantics, but most non-reasoning models actually degrade when given the rules.</p>
+          </article>
+          <article>
+            <span class="finding-index">02</span>
+            <h3>Redefining a familiar symbol is far harder than defining a new one.</h3>
+            <p>KeywordSwap causes 40–70-point drops where KeywordObf causes modest ones. Conflict with priors—not unfamiliarity—is what breaks models.</p>
+          </article>
+          <article>
+            <span class="finding-index">03</span>
+            <h3>Structural complexity overwhelms rule composition.</h3>
+            <p>Moving to fuzzer-generated programs collapses accuracy by 40+ points even under standard semantics. Loop nesting depth, data-flow degree, and trace length are the strongest predictors of failure.</p>
+          </article>
+          <article>
+            <span class="finding-index">04</span>
+            <h3>Full-trace conditioning is nearly absent.</h3>
+            <p>Only 4 of 11 models achieve any non-zero PredTrace accuracy; the best result is 35%. Most models cannot stay grounded in the rules for dozens of steps.</p>
+          </article>
+        </div>
       </div>
     </section>
 
