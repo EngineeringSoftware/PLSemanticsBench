@@ -1,10 +1,664 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>PLSemanticsBench</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="PLSemanticsBench: do LLMs condition their reasoning on explicitly supplied formal programming language semantics, or lean on pretrained priors? ICML 2026.">
+  <meta name="theme-color" content="#f7f4ed">
+  <title>LLMs Lean on Priors, Not Programming Language Semantics</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>PLSemanticsBench</h1>
-    <p>Coming soon.</p>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top">
+    <nav class="nav shell" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="PLSemanticsBench home">
+        <img
+          class="brand-logo"
+          src="logo.png"
+          alt="PLSemanticsBench"
+        >
+        <span class="brand-text">
+          <span class="brand-title">PLSemanticsBench</span>
+          <span class="brand-subtitle">A counterfactual PL semantics dataset for rule-conditioned reasoning</span>
+        </span>
+      </a>
+      <div class="nav-links">
+        <a href="#problem">Problem</a>
+        <a href="#approach">Approach</a>
+        <a href="#benchmark">Benchmark</a>
+        <a href="#results">Results</a>
+        <a href="#analysis">Analysis</a>
+        <a href="#summary">Summary</a>
+      </div>
+      <a class="nav-paper" href="https://arxiv.org/pdf/2510.03415" target="_blank" rel="noreferrer">
+        Read paper <span aria-hidden="true">↗</span>
+      </a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero shell">
+      <div class="hero-copy">
+        <p class="eyebrow"><span>The 43rd International Conference on Machine Learning (ICML 2026)</span> · Seoul, South Korea</p>
+        <div class="header-container">
+          <h1>LLMs Lean on <em>Priors</em>, Not Programming Language <em>Semantics</em></h1>
+          <img class="brand-logo" src="logo.png" alt="PLSemanticsBench" />
+        </div>
+        <p class="hero-deck">
+          Can a language model execute a program according to explicitly supplied formal rules—even when those rules contradict meanings learned during pretraining?
+        </p>
+
+        <div class="authors" aria-label="Authors">
+          <span>Aditya Thimmaiah<sup>1</sup></span>
+          <span>Jiyang Zhang<sup>1</sup></span>
+          <span>Jayanth Srinivasa<sup>2</sup></span>
+          <span>Junyi Jessy Li<sup>1</sup></span>
+          <span>Milos Gligoric<sup>1</sup></span>
+        </div>
+        <p class="affiliations"><sup>1</sup>The University of Texas at Austin &nbsp; <sup>2</sup>Cisco Research</p>
+
+        <div class="hero-actions" aria-label="Project resources">
+          <a class="button" href="https://arxiv.org/pdf/2510.03415" target="_blank" rel="noreferrer">
+            <img class="button-icon" src="pdf.png" alt="" aria-hidden="true"> Paper
+          </a>
+          <a class="button" href="https://github.com/EngineeringSoftware/PLSemanticsBench" target="_blank" rel="noreferrer">
+            <img class="button-icon" src="github.png" alt="" aria-hidden="true"> Code
+          </a>
+          <a class="button" href="https://huggingface.co/datasets/EngineeringSoftware/PLSemanticsBench" target="_blank" rel="noreferrer">
+            <img class="button-icon" src="hf-logo.png" alt="" aria-hidden="true"> Dataset
+          </a>
+          <button
+            id="toggle-bibtex"
+            class="button"
+            type="button"
+            aria-expanded="false"
+            aria-controls="hero-citation"
+          >
+            <img class="button-icon" src="quotes.png" alt="" aria-hidden="true"> BibTeX
+          </button>
+        </div>
+        <div id="hero-citation" class="citation-card hero-citation" hidden>
+          <div class="citation-header">
+            <div>
+              <p class="micro-label">Citation</p>
+              <h3>BibTeX</h3>
+            </div>
+            <button id="copy-hero-bibtex" type="button">Copy citation</button>
+          </div>
+          <pre id="hero-bibtex">@inproceedings{thimmaiah2026llms,
+  title     = {LLMs Lean on Priors, Not Programming Language Semantics},
+  author    = {Thimmaiah, Aditya and Zhang, Jiyang and Srinivasa, Jayanth
+               and Li, Junyi Jessy and Gligoric, Milos},
+  booktitle = {ICML},
+  year      = {2026}
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section finding-section" aria-label="Headline findings">
+      <div class="shell finding-banner">
+        <h2>Finding</h2>
+        <p>
+          Frontier LLMs execute programs with up to <strong>90–100% accuracy</strong> when symbols retain their
+          usual meanings (e.g., <code>+</code> means addition). Under counterfactual semantic shifts
+          (e.g., redefining <code>+</code> to mean subtraction) accuracy collapses by <strong>40–70 percentage points</strong>
+          despite handing the <em>complete formal rules</em>. The models keep answering as if the rules were never changed.
+        </p>
+        <p class="finding-sub">
+          LLMs don't faithfully interpret the semantics they are given—they retrieve what symbols <em>usually</em> mean from pretraining.
+        </p>
+      </div>
+
+      <div class="metrics shell" aria-label="Headline numbers">
+        <article>
+          <strong>11</strong>
+          <p>frontier and open-weight LLMs evaluated</p>
+        </article>
+        <article>
+          <strong>90<span>%</span></strong>
+          <p>best final-state accuracy under standard semantics</p>
+        </article>
+        <article>
+          <strong>40–60<span>pp</span></strong>
+          <p>drops under semantic mutation and structural shift</p>
+        </article>
+        <article>
+          <strong>35<span>%</span></strong>
+          <p>best long-horizon rule-conditioning accuracy</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell" id="problem">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">The problem</p>
+          <h2>Models execute the symbol they remember, not the rule they are given.</h2>
+        </div>
+        <p>
+          This is not a contrived scenario. Operator overloading in C++, Python, Scala, and DSLs like Triton
+          routinely assigns new meanings to familiar operators—or introduces symbols a model has never seen. A trustworthy
+          interpreter must follow the specification it is handed, not its habits.
+        </p>
+      </div>
+
+      <div class="problem-layout">
+        <div class="problem-copy">
+          <h3>The 2 + 2 experiment</h3>
+          <p>
+            Ask a model to execute <code>x = 2 + 2</code> under standard semantics, and it answers <strong>4</strong> every time.
+            Now supply a complete formal semantics in the prompt in which <code>+</code> is defined—rule by rule—to perform
+            <em>subtraction</em>, and ask again.
+          </p>
+          <div class="experiment-steps">
+            <div class="experiment-step good-step">
+              <span class="micro-label">Standard rules · “+ is addition”</span>
+              <p><code>x = 2 + 2</code> → models answer <strong>4</strong> <span class="check">✓</span></p>
+            </div>
+            <div class="experiment-step bad-step">
+              <span class="micro-label">Swapped rules · “+ is subtraction”</span>
+              <p><code>x = 2 + 2</code> → models still answer <strong>4</strong> <span class="cross">✗</span> <em>(should be 0)</em></p>
+            </div>
+          </div>
+          <p>
+            They are not interpreting—they are recalling <em>“+ means add”</em> from training data. The same conflict
+            arises for every operator, comparison, and keyword. PLSemanticsBench turns this observation into a
+            controlled, execution-grounded measurement.
+          </p>
+        </div>
+
+        <div class="hero-visual" aria-label="Interactive semantics comparison">
+          <div class="visual-topline">
+            <span class="live-dot"></span>
+            <span>Try it: semantic fault line</span>
+            <span class="visual-id">C★ / arithmetic</span>
+          </div>
+
+          <div class="semantics-tabs" role="tablist" aria-label="Choose semantics">
+            <button class="semantics-tab active" data-mode="standard" role="tab" aria-selected="true">Standard</button>
+            <button class="semantics-tab" data-mode="swap" role="tab" aria-selected="false">KeywordSwap</button>
+            <button class="semantics-tab" data-mode="obf" role="tab" aria-selected="false">KeywordObf</button>
+          </div>
+
+          <div class="program-window">
+            <div class="window-bar">
+              <span></span><span></span><span></span>
+              <strong>example.cstar</strong>
+            </div>
+            <pre class="code"><span class="ln">1</span> <span class="kw">int</span> x;
+<span class="ln">2</span> x = (<label for="left-value" class="sr-only">Left operand</label><input id="left-value" class="code-input" type="number" value="2" inputmode="numeric"> <span id="program-operator" class="operator">+</span> <label for="right-value" class="sr-only">Right operand</label><input id="right-value" class="code-input" type="number" value="2" inputmode="numeric">);</pre>
+          </div>
+
+          <div class="rule-card">
+            <div>
+              <p class="micro-label">Supplied rule (E-ADD)</p>
+              <p id="rule-description" class="rule-description"><code>+</code> evaluates as integer addition.</p>
+            </div>
+            <div class="inference-rule" aria-label="Formal semantic rule">
+              <span id="rule-premise">v₃ = v₁ + v₂</span>
+              <span class="rule-line"></span>
+              <span id="rule-conclusion">⟨v₁ + v₂, σ⟩ → ⟨v₃, σ⟩</span>
+            </div>
+          </div>
+
+          <div class="answer-grid">
+            <div class="answer rule-answer">
+              <p class="micro-label">Faithful interpreter</p>
+              <strong>x = <span id="semantic-answer">4</span></strong>
+              <span class="answer-status good">follows semantics</span>
+            </div>
+            <div class="answer prior-answer">
+              <p class="micro-label">Prior-driven model</p>
+              <strong>x = <span id="prior-answer">4</span></strong>
+              <span id="prior-status" class="answer-status neutral">same answer</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section approach-section" id="approach">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">How we test rule conditioning</p>
+            <h2>Rule out every excuse before measuring the failure.</h2>
+          </div>
+          <p>
+            Formal semantics gives us a controlled intervention: preserve a program’s surface syntax while changing
+            the transition rules that define its behavior. A model that truly conditions on the supplied rules
+            should change its answer immediately. Our methodology makes sure that when models fail, the failure
+            is about <em>reasoning</em>—not parsing, tokenization, or ambiguity.
+          </p>
+        </div>
+
+        <div class="steps-grid">
+          <article class="step-card">
+            <span class="step-num">Step 1</span>
+            <h3>Verify models understand the notation</h3>
+            <p>
+              Before any execution test, models solve two multiple-choice tasks: match a natural-language description to
+              its formal rule (NL → Rule) and vice-versa (Rule → NL), under every semantic shift.
+            </p>
+            <div class="step-result good-note">
+              <strong>Near-ceiling accuracy</strong> for nearly all models across all variants. Downstream failures are
+              <em>not</em> an inability to read and understand the formalism.
+            </div>
+          </article>
+          <article class="step-card">
+            <span class="step-num">Step 2</span>
+            <h3>Change the meaning, keep the syntax</h3>
+            <p>
+              Two systematic transformations of the standard C★ semantics preserve rule structure while perturbing the
+              symbol–meaning map: <strong>KeywordSwap</strong> creates direct conflict with priors; <strong>KeywordObf</strong>
+              removes familiarity altogether.
+            </p>
+            <div class="step-result">
+              Same programs, same rule structure, different symbol bindings—isolating priors from supplied rules.
+            </div>
+          </article>
+          <article class="step-card">
+            <span class="step-num">Step 3</span>
+            <h3>Stress with structural complexity</h3>
+            <p>
+              Three program splits with sharply increasing control-flow, data-flow, and size complexity—from adapted
+              LeetCode/MBPP solutions to fuzzer-generated programs with 100× the cyclomatic complexity.
+            </p>
+            <div class="step-result">
+              Separates “can follow rules once” from “can sustain rule-conditioned execution at scale.”
+            </div>
+          </article>
+        </div>
+
+        <div class="shift-diagram">
+          <article class="shift-card standard">
+            <span class="shift-number">01</span>
+            <p class="micro-label">Standard</p>
+            <h3>Familiar syntax, familiar meaning</h3>
+            <div class="mapping"><code>+</code><span>means</span><strong>addition</strong></div>
+            <p>Syntax and pretrained associations agree. Measures baseline execution ability.</p>
+          </article>
+          <div class="shift-arrow" aria-hidden="true">→</div>
+          <article class="shift-card swap">
+            <span class="shift-number">02</span>
+            <p class="micro-label">KeywordSwap</p>
+            <h3>Familiar syntax, conflicting meaning</h3>
+            <div class="mapping"><code>-</code><span>means</span><strong>addition</strong></div>
+            <p>The strongest test of whether supplied rules override lexical priors.</p>
+          </article>
+          <div class="shift-arrow" aria-hidden="true">→</div>
+          <article class="shift-card obf">
+            <span class="shift-number">03</span>
+            <p class="micro-label">KeywordObf</p>
+            <h3>Novel syntax, explicitly defined meaning</h3>
+            <div class="mapping"><code>𐔱</code><span>means</span><strong>addition</strong></div>
+            <p>Familiar symbolic cues are removed while rule structure is preserved.</p>
+          </article>
+        </div>
+
+        <div class="mutation-card">
+          <div class="mutation-header">
+            <div>
+              <p class="micro-label">The semantic shifts</p>
+              <h3>Every operator and keyword is systematically remapped.</h3>
+            </div>
+            <p>
+              KeywordSwap exchanges the semantics of paired operators (<code>+</code>↔<code>−</code>, <code>*</code>↔<code>/</code>,
+              <code>&lt;</code>↔<code>&gt;</code>, <code>==</code>↔<code>!=</code>, <code>&amp;&amp;</code>↔<code>||</code>, …).
+              KeywordObf assigns standard meanings to symbols from the rarely encountered Caucasian-Albanian script.
+            </p>
+          </div>
+          <div class="mutation-scroll">
+            <table class="mutation-table">
+              <thead>
+                <tr>
+                  <th scope="row">Standard</th>
+                  <td><code>+</code></td><td><code>-</code></td><td><code>*</code></td><td><code>/</code></td>
+                  <td><code>&lt;</code></td><td><code>&lt;=</code></td><td><code>&gt;</code></td><td><code>&gt;=</code></td>
+                  <td><code>==</code></td><td><code>!=</code></td><td><code>&amp;&amp;</code></td><td><code>||</code></td>
+                  <td><code>while</code></td><td><code>if-else</code></td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="swap-row">
+                  <th scope="row">KeywordSwap</th>
+                  <td><code>-</code></td><td><code>+</code></td><td><code>/</code></td><td><code>*</code></td>
+                  <td><code>&gt;</code></td><td><code>&gt;=</code></td><td><code>&lt;</code></td><td><code>&lt;=</code></td>
+                  <td><code>!=</code></td><td><code>==</code></td><td><code>||</code></td><td><code>&amp;&amp;</code></td>
+                  <td><code>while</code></td><td><code>if-else</code></td>
+                </tr>
+                <tr class="obf-row">
+                  <th scope="row">KeywordObf</th>
+                  <td><code>𐔱</code></td><td><code>𐔲</code></td><td><code>𐔳</code></td><td><code>𐔴</code></td>
+                  <td><code>𐔶</code></td><td><code>𐔷</code></td><td><code>𐔸</code></td><td><code>𐔹</code></td>
+                  <td><code>𐔺</code></td><td><code>𐔻</code></td><td><code>𐔽</code></td><td><code>𐔾</code></td>
+                  <td><code>𐕀</code></td><td><code>𐔿</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="data-note">Swapped pairs receive each other’s transition rules; obfuscated symbols receive the standard rules verbatim. Rule structure, granularity, and count are identical across all three variants.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section benchmark-section" id="benchmark">
+      <div class="shell">
+        <div class="section-heading">
+          <p class="eyebrow">PLSemanticsBench</p>
+          <h2>Four hypotheses, three tasks, two formalisms, three program splits.</h2>
+          <p>
+            C★—a featherweight C with explicit block delimiters—is formalized in both fine-grained small-step
+            operational semantics (𝕊) and coarser rewriting-based K semantics (𝕂). Ground truths come from executing
+            each program under the transformed semantics with the K-framework and a custom interpreter.
+          </p>
+        </div>
+
+        <div class="hypotheses-grid" aria-label="Tested hypotheses">
+          <article><span>H1</span><h3>Global rule conditioning</h3><p>Models can compose many rule applications to correctly predict final states.</p><code>→ PredState</code></article>
+          <article><span>H2</span><h3>State-free rule conditioning</h3><p>Models can select correct rules when execution never mutates program state.</p><code>→ PredRule</code></article>
+          <article><span>H3</span><h3>Long-horizon rule conditioning</h3><p>Models can follow formal rules consistently across full execution traces.</p><code>→ PredTrace</code></article>
+          <article><span>H4</span><h3>Conditioning under semantic shift</h3><p>Models continue following supplied rules when those rules conflict with priors.</p><code>→ Swap / Obf on all tasks</code></article>
+        </div>
+
+        <div class="benchmark-layout">
+          <div class="pipeline" aria-label="Benchmark construction pipeline">
+            <div class="pipeline-stage">
+              <span class="stage-index">1</span>
+              <div class="stage-icon syntax-icon" aria-hidden="true">{ }</div>
+              <h3>C★ program</h3>
+              <p>Human-written, LLM-translated, or fuzzer-generated.</p>
+            </div>
+            <div class="pipeline-connector"><span>+</span></div>
+            <div class="pipeline-stage">
+              <span class="stage-index">2</span>
+              <div class="stage-icon rule-icon" aria-hidden="true">Ψ</div>
+              <h3>Formal semantics</h3>
+              <p>Small-step operational semantics or K semantics.</p>
+            </div>
+            <div class="pipeline-connector"><span>→</span></div>
+            <div class="pipeline-stage accent-stage">
+              <span class="stage-index">3</span>
+              <div class="stage-icon shift-icon" aria-hidden="true">⇄</div>
+              <h3>Semantic shift</h3>
+              <p>Standard, KeywordSwap, or KeywordObf.</p>
+            </div>
+            <div class="pipeline-connector"><span>→</span></div>
+            <div class="pipeline-stage">
+              <span class="stage-index">4</span>
+              <div class="stage-icon output-icon" aria-hidden="true">✓</div>
+              <h3>Ground truth</h3>
+              <p>Final state, rule sequence, and full execution trace.</p>
+            </div>
+          </div>
+
+          <div class="task-panel">
+            <div class="task-tabs" role="tablist" aria-label="Benchmark tasks">
+              <button class="task-tab active" data-task="state" role="tab" aria-selected="true">PredState</button>
+              <button class="task-tab" data-task="rule" role="tab" aria-selected="false">PredRule</button>
+              <button class="task-tab" data-task="trace" role="tab" aria-selected="false">PredTrace</button>
+            </div>
+            <div class="task-content">
+              <div>
+                <p class="micro-label" id="task-hypothesis">Hypothesis H1 · Global conditioning</p>
+                <h3 id="task-title">Predict the final state.</h3>
+                <p id="task-description">Compose many rule applications across control and data flow to determine all variable values after termination.</p>
+              </div>
+              <div class="task-terminal">
+                <div class="terminal-bar"><span></span><span></span><span></span></div>
+                <pre id="task-example">&lt;ans&gt;
+  &lt;n&gt;5&lt;/n&gt;
+&lt;/ans&gt;</pre>
+              </div>
+            </div>
+            <div class="task-scale">
+              <span>Coarse outcome</span>
+              <div><i></i><i></i><i></i><i></i><i></i></div>
+              <span>Fine-grained trace</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="splits-card">
+          <div class="splits-header">
+            <div>
+              <p class="micro-label">Program splits · median complexity</p>
+              <h3>Complexity is a controlled axis, not an accident.</h3>
+            </div>
+            <p>
+              Splits are validated by execution: human-written programs are checked against public test oracles;
+              translated programs are filtered by successful K-framework execution; fuzzed programs are generated
+              with legality masks and guaranteed-terminating loops.
+            </p>
+          </div>
+          <div class="splits-scroll">
+            <table class="splits-table">
+              <thead>
+                <tr>
+                  <th scope="col">Split</th>
+                  <th scope="col">Programs</th>
+                  <th scope="col">Source</th>
+                  <th scope="col">Cyclomatic</th>
+                  <th scope="col">Lines of code</th>
+                  <th scope="col">DepDegree</th>
+                  <th scope="col">Trace length</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Human-Written</strong></td>
+                  <td>162</td>
+                  <td>LeetCode, HumanEval, CodeContests, MBPP</td>
+                  <td>3</td><td>19</td><td>12</td><td>20</td>
+                </tr>
+                <tr>
+                  <td><strong>LLM-Translated</strong></td>
+                  <td>165</td>
+                  <td>CodeForces C++ → C★ via Qwen2.5-Inst 32B</td>
+                  <td>9</td><td>106</td><td>48</td><td>180</td>
+                </tr>
+                <tr>
+                  <td><strong>Fuzzer-Generated</strong></td>
+                  <td>165</td>
+                  <td>Depth-controlled, semantics-aware grammar fuzzer</td>
+                  <td>100</td><td>794</td><td>6K</td><td>190</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="benchmark-facts">
+          <div><span>2</span><p>semantic formalisms (𝕊 and 𝕂)</p></div>
+          <div><span>3</span><p>program splits of rising complexity</p></div>
+          <div><span>3</span><p>semantic shifts per formalism</p></div>
+          <div><span>3</span><p>tasks from outcomes to full traces</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="results">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Results</p>
+          <h2>High standard accuracy hides brittle semantic conditioning.</h2>
+        </div>
+        <p>
+          Explore published results across tasks, program complexity, formalization, and semantic condition. The most
+          revealing contrast is not which model scores highest, but how much accuracy survives when symbol meanings shift.
+        </p>
+      </div>
+
+      <div class="results-card">
+        <div class="result-controls">
+          <label>
+            Task
+            <select id="task-select">
+              <option value="state">PredState · final states</option>
+              <option value="rule">PredRule · rule selection</option>
+              <option value="trace">PredTrace · full traces</option>
+            </select>
+          </label>
+          <label>
+            Dataset
+            <select id="dataset-select">
+              <option value="human">Human-Written</option>
+              <option value="translated">LLM-Translated</option>
+              <option value="fuzzer">Fuzzer-Generated</option>
+            </select>
+          </label>
+          <label>
+            Formalization
+            <select id="formalization-select">
+              <option value="k">K semantics</option>
+              <option value="s">Small-step semantics</option>
+            </select>
+          </label>
+          <div class="legend" id="chart-legend" aria-label="Chart legend">
+            <span><i class="na"></i>No semantics</span>
+            <span><i class="std"></i>Standard</span>
+            <span><i class="swap"></i>KeywordSwap</span>
+            <span><i class="obf"></i>KeywordObf</span>
+          </div>
+        </div>
+
+        <div class="chart-header">
+          <div>
+            <p class="micro-label" id="chart-metric">PredState · exact-match accuracy (%)</p>
+            <h3 id="chart-title">Human-Written · K semantics</h3>
+          </div>
+          <p id="chart-note">The swap condition creates a direct conflict between familiar symbols and supplied meanings.</p>
+        </div>
+
+        <div id="bar-chart" class="bar-chart" aria-label="Interactive model accuracy chart"></div>
+
+        <div class="result-insight">
+          <span class="insight-mark" aria-hidden="true">!</span>
+          <p id="result-insight-text"><strong>Semantic gap:</strong> Several models approach ceiling accuracy under standard semantics yet lose tens of percentage points when operator meanings are swapped.</p>
+        </div>
+        <p class="data-note">Values reported in Tables 4–6 of the paper (one-shot prompting; reasoning-model results averaged over three runs, std. dev. ≤ 5.2 points). Only models reported for the selected split/task are shown.</p>
+      </div>
+
+      <div class="findings-grid">
+        <article>
+          <span class="finding-index">01</span>
+          <h3>Rules help reasoning models—until the symbols fight back.</h3>
+          <p>Supplying formal semantics lifts reasoning models by 9–16 points under standard semantics, but most non-reasoning models actually degrade when given the rules.</p>
+        </article>
+        <article>
+          <span class="finding-index">02</span>
+          <h3>Redefining a familiar symbol is far harder than defining a new one.</h3>
+          <p>KeywordSwap causes 40–70-point drops where KeywordObf causes modest ones. Conflict with priors—not unfamiliarity—is what breaks models.</p>
+        </article>
+        <article>
+          <span class="finding-index">03</span>
+          <h3>Structural complexity overwhelms rule composition.</h3>
+          <p>Moving to fuzzer-generated programs collapses accuracy by 40+ points even under standard semantics. Loop nesting depth, data-flow degree, and trace length are the strongest predictors of failure.</p>
+        </article>
+        <article>
+          <span class="finding-index">04</span>
+          <h3>Full-trace conditioning is nearly absent.</h3>
+          <p>Only 4 of 11 models achieve any non-zero PredTrace accuracy; the best result is 35%. Most models cannot stay grounded in the rules for dozens of steps.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section approach-section" id="analysis">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Ruling out the easy explanations</p>
+            <h2>What doesn’t fix it.</h2>
+          </div>
+          <p>
+            Each control experiment targets a candidate excuse for the failures—prompting style, tokenization,
+            state-tracking burden—and eliminates it. What remains is the core deficit: conditioning on supplied rules.
+          </p>
+        </div>
+
+        <div class="fix-grid">
+          <article>
+            <p class="micro-label">Attempt 1</p>
+            <h3>Chain-of-thought prompting</h3>
+            <p>
+              CoT lifts non-reasoning models by <strong>~50 points</strong> under standard semantics
+              (Llama-3.3 70B: 29% → 75%). Under KeywordSwap the gains <strong>vanish entirely</strong> (4% → 3%).
+            </p>
+            <div class="fix-verdict">Reasoning traces aid execution, but do not override pretrained operator biases.</div>
+          </article>
+          <article>
+            <p class="micro-label">Attempt 2</p>
+            <h3>Tokenizer-controlled symbols (1Tok)</h3>
+            <p>
+              Maybe KeywordObf fails because rare Unicode glyphs shatter into many tokens? Replacing every symbol with a
+              verified <strong>single-token</strong> alternative changes accuracy by ≤ 2.5 points (e.g., 8.4% → 7.0%).
+            </p>
+            <div class="fix-verdict">Failures under novel symbols are not a tokenization artifact.</div>
+          </article>
+          <article>
+            <p class="micro-label">Attempt 3</p>
+            <h3>Removing state tracking (PredRule)</h3>
+            <p>
+              Even when programs never mutate state—eliminating the long-horizon burden entirely—most models still
+              mispredict rules under KeywordSwap (o3-mini drops ~30 points).
+            </p>
+            <div class="fix-verdict">Priors dominate even a single, local rule-selection decision.</div>
+          </article>
+        </div>
+
+        <div class="outlier-card">
+          <div>
+            <p class="micro-label">The exception that sharpens the rule</p>
+            <h3>Robust rule conditioning exists—but only barely, and only in one model.</h3>
+          </div>
+          <p>
+            Gemini-2.5-pro maintains ≥97% PredState accuracy under KeywordSwap on human-written programs and is the only
+            model whose PredTrace accuracy <em>improves</em> under semantic shift (32% → 35%). This shows mutation-robust
+            rule conditioning is achievable—yet it appears in a single frontier system, is far from a general consequence
+            of scale or reasoning training, and still collapses on fuzzer-generated programs (69% → 26% under swap).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="summary">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Summary of findings</p>
+            <h2>Rule conditioning is a largely unsolved capability axis.</h2>
+          </div>
+          <p>
+            Across 11 frontier models, two formalisms, three semantic shifts, and three complexity regimes,
+            the picture is consistent: contemporary LLMs rely on pretrained lexical associations rather than
+            systematically conditioning on supplied formal rules.
+          </p>
+        </div>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <strong>Notation is not the bottleneck.</strong>
+            <p>Models read the formalism at near-ceiling accuracy—then fail to apply it.</p>
+          </div>
+          <div class="summary-item">
+            <strong>Conflict, not novelty, breaks models.</strong>
+            <p>Swapping familiar meanings hurts far more than introducing unfamiliar symbols.</p>
+          </div>
+          <div class="summary-item">
+            <strong>CoT and scale don’t rescue conditioning.</strong>
+            <p>Gains from reasoning traces evaporate exactly when rules conflict with priors.</p>
+          </div>
+          <div class="summary-item">
+            <strong>Long horizons expose the deficit.</strong>
+            <p>Only 4 models produce any correct full trace; the best reaches 35%.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
