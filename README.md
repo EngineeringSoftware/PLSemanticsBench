@@ -175,58 +175,58 @@ predstate_IMP_nk_fuzzer_generated = load_dataset("EngineeringSoftware/PLSemantic
   </tr>
   <tr>
     <td rowspan="5">✨ <strong>PredState</strong><br>(Final State Prediction)</td>
-    <td> predstate-IMP-nk-{dataset-name} </td>
+    <td> predstate/None-{dataset-name} </td>
     <td> No semantics </td>
   </tr>
   <tr>
-    <td> predstate-IMP-K-uk-{dataset-name} </td>
-    <td>Standard semantics with K-semantics formalization</td>
+    <td> predstate/K-Standard-{dataset-name} </td>
+    <td>Standard semantics with K formalization</td>
   </tr>
   <tr>
-    <td> predstate-IMP-K-mk-{dataset-name} </td>
-    <td>Nonstandard semantics with K-semantics formalization</td>
+    <td> predstate/K-NonStandard-{dataset-name} </td>
+    <td>Nonstandard semantics with K formalization</td>
   </tr>
   <tr>
-    <td> predstate-IMP-SOS-uk-{dataset-name} </td>
-    <td>Standard semantics with SOS formalization</td>
+    <td> predstate/S-Standard-{dataset-name} </td>
+    <td>Standard semantics with S formalization</td>
   </tr>
   <tr>
-    <td> predstate-IMP-SOS-mk-{dataset-name} </td>
-    <td>Nonstandard semantics with SOS formalization</td>
+    <td> predstate/S-NonStandard-{dataset-name} </td>
+    <td>Nonstandard semantics with S formalization</td>
   </tr>
   <tr>
     <td rowspan="4">✨ <strong>PredRule</strong><br>(Semantic Rule Prediction)</td>
-    <td> predrule-IMP-K-uk-human-written </td>
-    <td>Standard semantics with K-semantics formalization</td>
+    <td> predrule/K-Standard-human-written </td>
+    <td>Standard semantics with K formalization</td>
   </tr>
   <tr>
-    <td> predrule-IMP-K-mk-human-written </td>
-    <td>Nonstandard semantics with K-semantics formalization</td>
+    <td> predrule/K-NonStandard-human-written </td>
+    <td>Nonstandard semantics with K formalization</td>
   </tr>
   <tr>
-    <td> predrule-IMP-SOS-uk-human-written </td>
-    <td>Standard semantics with SOS formalization</td>
+    <td> predrule/S-Standard-human-written </td>
+    <td>Standard semantics with S formalization</td>
   </tr>
   <tr>
-    <td> predrule-IMP-SOS-mk-human-written </td>
-    <td>Nonstandard semantics with SOS formalization</td>
+    <td> predrule/S-NonStandard-human-written </td>
+    <td>Nonstandard semantics with S formalization</td>
   </tr>
   <tr>
     <td rowspan="4">✨ <strong>PredTrace</strong><br>(Execution Trace Prediction)</td>
-    <td> predtrace-IMP-K-uk-human-written </td>
-    <td>Standard semantics with K-semantics formalization</td>
+    <td> predtrace/K-Standard-human-written </td>
+    <td>Standard semantics with K formalization</td>
   </tr>
   <tr>
-    <td> predtrace-IMP-K-mk-human-written </td>
-    <td>Nonstandard semantics with K-semantics formalization</td>
+    <td> predtrace/K-NonStandard-human-written </td>
+    <td>Nonstandard semantics with K formalization</td>
   </tr>
   <tr>
-    <td> predtrace-IMP-SOS-uk-human-written </td>
-    <td>Standard semantics with SOS formalization</td>
+    <td> predtrace/S-Standard-human-written </td>
+    <td>Standard semantics with S formalization</td>
   </tr>
   <tr>
-    <td> predtrace-IMP-SOS-mk-human-written </td>
-    <td>Nonstandard semantics with SOS formalization</td>
+    <td> predtrace/S-NonStandard-human-written </td>
+    <td>Nonstandard semantics with S formalization</td>
   </tr>
 </table>
 
