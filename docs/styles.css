@@ -140,7 +140,7 @@ code, pre, .brand-mark {
   text-align: center;
 }
 .eyebrow {
-  font-size: 16px; font-weight: 800; color: var(--cyan);
+  font-size: 20px; font-weight: 800; color: var(--cyan);
 }
 .eyebrow span {
   color: var(--bg); background: var(--gold); padding: 4px 8px; border-radius: 5px; letter-spacing: 0.1em;
@@ -929,6 +929,21 @@ footer {
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
+}
+.eyebrow-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.eyebrow-with-icon .eyebrow {
+  margin: 0;
+}
+.eyebrow-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 .finding-banner {
   margin-bottom: 10px;
