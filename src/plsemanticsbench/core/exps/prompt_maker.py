@@ -98,7 +98,7 @@ def make_predstate_prompt(args: ExperimentArgs, dt: dict) -> List[dict[str, str]
                     ERROR="ERROR",
                     HALT="halt",
                     ASSIGN_OP="=",
-                    ADD_OP="-",
+                    ADD_OP=SEMANTICS_MUTATIONS["KeywordSwap"]["PLUS_OP"],
                 )
             elif "KeywordObf" in dt["mutation-pattern"]:
                 prompt: str = prompt_template.format(
@@ -153,7 +153,7 @@ def make_predrule_prompt(args: ExperimentArgs, dt: dict) -> List[dict[str, str]]
             syntax=dt["syntax"],
             semantics=dt["semantics"],
             questions=_prepare_predrule_questions(dt, program),
-            LTEQ_OP=">=",
+            LTEQ_OP=SEMANTICS_MUTATIONS["KeywordSwap"]["LTEQ_OP"],
             NOT_OP="!",
             ERROR="ERROR",
             HALT="halt",
@@ -211,8 +211,8 @@ def make_predtrace_prompt(args: ExperimentArgs, dt: dict) -> List[dict[str, str]
             HALT="halt",
             WHILE="while",
             ASSIGN_OP="=",
-            LT_OP=">",
-            PLUS_OP="-",
+            LT_OP=SEMANTICS_MUTATIONS["KeywordSwap"]["LT_OP"],
+            PLUS_OP=SEMANTICS_MUTATIONS["KeywordSwap"]["PLUS_OP"],
             IF="if",
             ELSE="else",
         )
