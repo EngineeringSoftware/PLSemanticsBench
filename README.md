@@ -1,17 +1,6 @@
 <div align="center">
   <p>The 43rd International Conference on Machine Learning (ICML 2026), Seoul, South Korea</p>
-  <h1>
-    LLMs Lean on Priors, Not Programming Language Semantics
-      <img
-        src="https://raw.githubusercontent.com/EngineeringSoftware/PLSemanticsBench/main/docs/logo.png"
-        alt="PLSemanticsBench logo"
-        width="50"
-        style="display: inline-block !important;
-               vertical-align: 4.0em;
-               margin-left: 10px;
-               margin-top: 10px;">
-    </span>
-  </h1>
+  <h1>LLMs Lean on Priors, Not Programming Language Semantics</h1>
 
   <p style="font-size: 20px;">
     by
@@ -29,12 +18,23 @@
 </div>
 
 <div align="center">
-
+  
 [![Website](https://img.shields.io/badge/Project_Page-PLSemanticsBench-blueviolet)](https://engineeringsoftware.github.io/PLSemanticsBench/)
 [![arXiv](https://img.shields.io/badge/arXiv-2510.03415v3-b31b1b.svg)](https://arxiv.org/pdf/2510.03415v3)
 [![Code](https://img.shields.io/badge/Code-GitHub-black)](https://github.com/EngineeringSoftware/PLSemanticsBench)
 [![Dataset](https://img.shields.io/badge/🤗-Dataset-yellow)](https://huggingface.co/datasets/EngineeringSoftware/PLSemanticsBench)
 
+</div>
+
+<div align="center">
+  <img
+src="https://raw.githubusercontent.com/EngineeringSoftware/PLSemanticsBench/main/docs/logo.png"
+alt="PLSemanticsBench logo"
+width="80"
+style="display: inline-block !important;
+       vertical-align: 4.0em;
+       margin-left: 10px;
+       margin: 0;">
 </div>
 
 
@@ -47,16 +47,14 @@
 - [Citation](#citation)
 
 ## About
-PLSemanticsBench is the first counterfactual PL semantics dataset for evaluating rule-conditioned reasoning in LLMs. 
-Program execution is used as a lens for evaluating it via three tasks:
+PLSemanticsBench is the first counterfactual programming language (PL) semantics dataset for evaluating rule-conditioned reasoning in LLMs. 
+We use program execution as a lens for evaluating it, via three tasks:
 
 | Task | Description |
 |------|-------------|
 | ✨ **PredState**| Predicts the final program state |
 | ✨ **PredRule** | Predicts the ordered sequence of semantic rules needed to evaluate a program|
 | ✨ **PredTrace**| Predicts the step-by-step execution of a program |
-
-PLSemanticsBench is hosted on HuggingFace: [PLSemanticsBench](https://huggingface.co/datasets/EngineeringSoftware/PLSemanticsBench).
 
 You must implement [BaseRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/base_experiment.py)(`_query` method) to evaluate your models. We provide two example implementations for OpenAI models ([GPTRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/gpt_experiment.py)) and Ollama models ([OllamaRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/ollama_experiment.py)).
 
@@ -147,10 +145,9 @@ print(evaluation_result)
 }
 ```
 
-## Benchmark
-Our benchmark is hosted on HuggingFace: [PLSemanticsBench](https://huggingface.co/datasets/EngineeringSoftware/PLSemanticsBench). 
+## Dataset
 
-### Benchmark Access
+### Access
 You can load the dataset using the `datasets` library. Here is an example:
 ```python
 from datasets import load_dataset
@@ -165,7 +162,7 @@ predrule_IMP_SOS_mk_llm_translated = load_dataset("EngineeringSoftware/PLSemanti
 predstate_IMP_nk_fuzzer_generated = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predstate-IMP-nk-fuzzer-generated")
 ```
 
-### Dataset Split
+### Splits
 
 <table>
   <tr>
@@ -231,9 +228,9 @@ predstate_IMP_nk_fuzzer_generated = load_dataset("EngineeringSoftware/PLSemantic
 </table>
 
 
-### Data Example
+### Example Data Point
 
-One example of the dataset is as follows:
+An example of a data point from the `predstate/None-human-written` split:
 ```json
 {
   "program": "int ans; ans = 1; ...",
