@@ -1256,6 +1256,55 @@ footer {
 .summary-item strong { display: block; font-family: Georgia, serif; font-size: 19px; font-weight: 500; color: var(--ink); margin-bottom: 8px; }
 .summary-item p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
 
+.attribution-section {
+  padding-top: 0;
+  padding-bottom: 88px;
+}
+.attribution-card {
+  padding: 26px 28px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, .72);
+  box-shadow: 0 10px 28px rgba(22, 39, 58, .03);
+}
+.attribution-card .eyebrow {
+  margin: 0;
+}
+.attribution-copy {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+.attribution-list {
+  margin: 14px 0 0;
+  padding-left: 22px;
+  color: #516273;
+}
+.attribution-list li {
+  display: list-item;
+}
+.attribution-list li + li {
+  margin-top: 8px;
+}
+.attribution-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  vertical-align: text-bottom;
+  object-fit: contain;
+}
+.attribution-list a {
+  color: #516273;
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.attribution-list a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
 .micro-label,
 .mapping span,
 .stage-index,
