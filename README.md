@@ -1,17 +1,6 @@
 <div align="center">
   <p>The 43rd International Conference on Machine Learning (ICML 2026), Seoul, South Korea</p>
-  <h1>
-    LLMs Lean on Priors, Not Programming Language Semantics
-      <img
-        src="https://raw.githubusercontent.com/EngineeringSoftware/PLSemanticsBench/main/docs/logo.png"
-        alt="PLSemanticsBench logo"
-        width="50"
-        style="display: inline-block !important;
-               vertical-align: 4.0em;
-               margin-left: 10px;
-               margin-top: 10px;">
-    </span>
-  </h1>
+  <h1>LLMs Lean on Priors, Not Programming Language Semantics</h1>
 
   <p style="font-size: 20px;">
     by
@@ -29,12 +18,23 @@
 </div>
 
 <div align="center">
-
+  
 [![Website](https://img.shields.io/badge/Project_Page-PLSemanticsBench-blueviolet)](https://engineeringsoftware.github.io/PLSemanticsBench/)
 [![arXiv](https://img.shields.io/badge/arXiv-2510.03415v3-b31b1b.svg)](https://arxiv.org/pdf/2510.03415v3)
 [![Code](https://img.shields.io/badge/Code-GitHub-black)](https://github.com/EngineeringSoftware/PLSemanticsBench)
 [![Dataset](https://img.shields.io/badge/🤗-Dataset-yellow)](https://huggingface.co/datasets/EngineeringSoftware/PLSemanticsBench)
 
+</div>
+
+<div align="center">
+  <img
+src="https://raw.githubusercontent.com/EngineeringSoftware/PLSemanticsBench/main/docs/logo.png"
+alt="PLSemanticsBench logo"
+width="80"
+style="display: inline-block !important;
+       vertical-align: 4.0em;
+       margin-left: 10px;
+       margin: 0;">
 </div>
 
 
