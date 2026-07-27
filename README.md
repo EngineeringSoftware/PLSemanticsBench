@@ -47,7 +47,7 @@
 - [Citation](#citation)
 
 ## About
-PLSemanticsBench is the first counterfactual PL semantics dataset for evaluating rule-conditioned reasoning in LLMs. 
+PLSemanticsBench is the first counterfactual programming language (PL) semantics dataset for evaluating rule-conditioned reasoning in LLMs. 
 Program execution is used as a lens for evaluating it via three tasks:
 
 | Task | Description |
@@ -145,10 +145,9 @@ print(evaluation_result)
 }
 ```
 
-## Benchmark
-Our benchmark is hosted on HuggingFace: [PLSemanticsBench](https://huggingface.co/datasets/EngineeringSoftware/PLSemanticsBench). 
+## Dataset
 
-### Benchmark Access
+### Access
 You can load the dataset using the `datasets` library. Here is an example:
 ```python
 from datasets import load_dataset
@@ -163,7 +162,7 @@ predrule_IMP_SOS_mk_llm_translated = load_dataset("EngineeringSoftware/PLSemanti
 predstate_IMP_nk_fuzzer_generated = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predstate-IMP-nk-fuzzer-generated")
 ```
 
-### Dataset Split
+### Splits
 
 <table>
   <tr>
@@ -229,9 +228,9 @@ predstate_IMP_nk_fuzzer_generated = load_dataset("EngineeringSoftware/PLSemantic
 </table>
 
 
-### Data Example
+### Example Data Point
 
-One example of the dataset is as follows:
+An example of a data point from the `predstate/None-human-written` split:
 ```json
 {
   "program": "int ans; ans = 1; ...",
