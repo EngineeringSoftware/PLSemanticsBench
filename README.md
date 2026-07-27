@@ -1,6 +1,41 @@
-# PLSemanticsBench
+<div align="center">
+  <p>The 43rd International Conference on Machine Learning (ICML 2026), Seoul, South Korea</p>
+  <h1>
+    LLMs Lean on Priors, Not Programming Language Semantics
+      <img
+        src="https://raw.githubusercontent.com/EngineeringSoftware/PLSemanticsBench/main/docs/logo.png"
+        alt="PLSemanticsBench logo"
+        width="50"
+        style="display: inline-block !important;
+               vertical-align: 4.0em;
+               margin-left: 10px;
+               margin-top: 10px;">
+    </span>
+  </h1>
 
-[![Hugging Face](https://img.shields.io/badge/Hugging%20Face-Dataset-blue)](https://huggingface.co/datasets/EngineeringSoftware/PLSemanticsBench)
+  <p style="font-size: 20px;">
+    by
+    <a href="https://www.adityathimmaiah.com">Aditya Thimmaiah</a><sup>1</sup>,
+    <a href="https://jiyangzhang.github.io/">Jiyang Zhang</a><sup>1</sup>,
+    <a href="https://scholar.google.com/citations?user=HtNfeKYAAAAJ&hl=en">Jayanth Srinivasa</a><sup>2</sup>,
+    <a href="https://www.jessyli.com">Junyi Jessy Li</a><sup>1</sup>,
+    <a href="https://users.ece.utexas.edu/~gligoric/">Milos Gligoric</a><sup>1</sup>
+  </p>
+
+  <p>
+    <sup>1</sup>The University of Texas at Austin &nbsp;&nbsp;&nbsp;
+    <sup>2</sup>Cisco Research
+  </p>
+</div>
+
+<div align="center">
+
+[![Website](https://img.shields.io/badge/Project_Page-PLSemanticsBench-blueviolet)](https://engineeringsoftware.github.io/PLSemanticsBench/)
+[![arXiv](https://img.shields.io/badge/arXiv-2510.03415v3-b31b1b.svg)](https://arxiv.org/pdf/2510.03415v3)
+[![Code](https://img.shields.io/badge/Code-GitHub-black)](https://github.com/EngineeringSoftware/PLSemanticsBench)
+[![Dataset](https://img.shields.io/badge/🤗-Dataset-yellow)](https://huggingface.co/datasets/EngineeringSoftware/PLSemanticsBench)
+
+</div>
 
 
 ## Table of Contents
@@ -12,7 +47,8 @@
 - [Citation](#citation)
 
 ## About
-PLSemanticsBench is the first benchmark for evaluating LLMs as programming language interpreters. We introduce three tasks to evaluate this:
+PLSemanticsBench is the first counterfactual PL semantics dataset for evaluating rule-conditioned reasoning in LLMs. 
+Program execution is used as a lens for evaluating it via three tasks:
 
 | Task | Description |
 |------|-------------|
