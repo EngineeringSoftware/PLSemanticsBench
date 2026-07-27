@@ -48,7 +48,7 @@ style="display: inline-block !important;
 
 ## About
 PLSemanticsBench is the first counterfactual programming language (PL) semantics dataset for evaluating rule-conditioned reasoning in LLMs. 
-Program execution is used as a lens for evaluating it via three tasks:
+We use program execution as a lens for evaluating it, via three tasks:
 
 | Task | Description |
 |------|-------------|
