@@ -1223,19 +1223,21 @@ footer {
 }
 .outlier-card {
   margin-top: 24px;
-  display: grid;
-  grid-template-columns: .85fr 1.15fr;
-  gap: 44px;
-  align-items: center;
-  padding: 32px 34px;
-  border: 1px solid rgba(22, 142, 146, .3);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* display: grid;
+  grid-template-columns: .85fr 1.15fr; */
+  padding: 22px 24px;
+  /* border: 1px solid rgba(22, 142, 146, .3); */
   border-radius: var(--radius-lg);
-  background: linear-gradient(150deg, rgba(22, 142, 146, .07), rgba(255, 255, 255, .84));
-  box-shadow: 0 14px 40px rgba(22, 39, 58, .045);
+  background: #baed9152;
+  /* background: linear-gradient(150deg, rgba(22, 142, 146, .07), rgba(255, 255, 255, .84)); */
+  /* box-shadow: 0 14px 40px rgba(22, 39, 58, .045); */
 }
 .outlier-card .micro-label { color: var(--cyan); }
 .outlier-card h3 { font-family: Georgia, serif; font-size: 23px; line-height: 1.25; font-weight: 500; color: var(--ink); margin: 8px 0 0; }
-.outlier-card > p { margin: 0; color: #45576a; font-size: 14px; line-height: 1.7; }
+.outlier-card > p { margin: 0; color: #45576a; font-size: 16px; line-height: 1.7; }
 
 .summary-section {
   background:
