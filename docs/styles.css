@@ -914,21 +914,39 @@ footer {
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
+.finding-banner-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.finding-banner-header h2 {
+  margin: 0;
+  line-height: 1;
+}
+.finding-banner-header img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 .finding-banner {
   margin-bottom: 10px;
   margin-top: 60px;
   padding: 14px 20px;
-  border: 1px solid rgba(201, 88, 81, .28);
-  border-left: 5px solid var(--coral);
+  border: 1px solid #e6e6e6;
+  /* border: 1px solid rgba(201, 88, 81, .28); */
+  /* border-left: 5px solid var(--coral); */
   border-radius: var(--radius);
-  background: linear-gradient(150deg, rgba(201, 88, 81, .07), rgba(255, 255, 255, .8));
-  box-shadow: 0 14px 40px rgba(22, 39, 58, .05);
+  /* background: linear-gradient(150deg, rgba(201, 88, 81, .07), rgba(255, 255, 255, .8)); */
+  background: #E6F2FF;
+  /* box-shadow: 0 14px 40px rgba(22, 39, 58, .05); */
 }
 .finding-banner .micro-label { color: var(--coral); font-size: 11px; }
 .finding-banner p {
   margin: 0;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(18px, 2.1vw, 23px);
+  font-size: clamp(16px, 2vw, 20px);
   line-height: 1.5;
   color: var(--ink);
 }
@@ -984,7 +1002,6 @@ footer {
 .cross { color: var(--coral); font-weight: 800; }
 .problem-layout .hero-visual { position: sticky; top: 96px; }
 
-/* --- Approach section --- */
 .approach-section {
   /* background: linear-gradient(180deg, rgba(255, 255, 255, .55), rgba(239, 244, 245, .5)); */
   background: white;
