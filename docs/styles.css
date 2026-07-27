@@ -192,19 +192,28 @@ h1 em:last-child { color: var(--cyan); }
 
 .hero-visual {
   border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius-lg);
-  background: linear-gradient(160deg, rgba(18, 34, 56, .97), rgba(8, 18, 32, .97));
-  box-shadow: var(--shadow); overflow: hidden; position: relative;
+  background:  white; /* linear-gradient(160deg, rgba(18, 34, 56, .97), rgba(8, 18, 32, .97)); */
+  /* box-shadow: var(--shadow); overflow: hidden; position: relative; */
 }
-.hero-visual::after {
+/* .hero-visual::after {
   content: ""; position: absolute; width: 190px; height: 190px; border-radius: 50%;
-  top: -100px; right: -70px; background: rgba(86,215,208,.12); filter: blur(20px); pointer-events: none;
-}
+  top: -100px; right: -70px; 
+   background: rgba(86,215,208,.12); 
+  filter: blur(20px);  
+  pointer-events: none;
+} */
 .visual-topline {
   display: flex; align-items: center; gap: 9px; padding: 16px 20px;
   border-bottom: 1px solid var(--line); color: var(--muted); font-size: 11px;
   text-transform: uppercase; letter-spacing: .13em; font-weight: 800;
 }
-.live-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; box-shadow: 0 0 0 5px rgba(121,224,157,.08); }
+.live-dot { 
+  width: 7px; 
+  height: 7px; 
+  background: var(--green); 
+  border-radius: 50%; 
+  /* box-shadow: 0 0 0 5px rgba(121,224,157,.08);  */
+}
 .visual-id { margin-left: auto; }
 .semantics-tabs, .task-tabs {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 16px 18px 12px; padding: 5px;
@@ -615,10 +624,11 @@ h1 em:last-child {
 
 .hero-visual {
   border-color: rgba(22, 39, 58, 0.12);
-  background:
+  background: white;
+  /* background:
     radial-gradient(circle at 88% 2%, rgba(200, 150, 46, 0.13), transparent 13rem),
     linear-gradient(150deg, rgba(255,255,255,.98), rgba(241,246,247,.98));
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow); */
 }
 
 .hero-visual::after {
@@ -1314,15 +1324,19 @@ footer {
   color: #617284;
 }
 
+.pipeline-stage p {
+  font-size: 14px;
+  color: #56687b;
+}
+
 .window-bar strong,
-.pipeline-stage p,
 .legend,
 .bar-value,
 .resource-grid small,
 .citation-header button,
 .footer-inner p,
 .finding-index {
-  font-size: 12px;
+  font-size: 16px;
   color: #56687b;
 }
 
@@ -1337,7 +1351,7 @@ footer {
 .chart-label,
 .data-note,
 .task-scale {
-  font-size: 12px;
+  font-size: 14px;
   color: #4f6174;
 }
 
