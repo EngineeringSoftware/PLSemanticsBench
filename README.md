@@ -261,4 +261,4 @@ An example of a data point from the `predstate/None-human-written` split:
 
 
 ## License
-This project is licensed under the [CC BY 4.0 License](https://creativecommons.org/licenses/by/4.0/).
+This project is licensed under the MIT License.
