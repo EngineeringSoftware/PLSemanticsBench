@@ -18,7 +18,7 @@
 </div>
 
 <div align="center">
-  
+
 [![Website](https://img.shields.io/badge/Project_Page-PLSemanticsBench-blueviolet)](https://engineeringsoftware.github.io/PLSemanticsBench/)
 [![arXiv](https://img.shields.io/badge/arXiv-2510.03415v3-b31b1b.svg)](https://arxiv.org/pdf/2510.03415v3)
 [![Code](https://img.shields.io/badge/Code-GitHub-black)](https://github.com/EngineeringSoftware/PLSemanticsBench)
@@ -30,11 +30,7 @@
   <img
 src="https://raw.githubusercontent.com/EngineeringSoftware/PLSemanticsBench/main/docs/logo.png"
 alt="PLSemanticsBench logo"
-width="80"
-style="display: inline-block !important;
-       vertical-align: 4.0em;
-       margin-left: 10px;
-       margin: 0;">
+width="80">
 </div>
 
 
