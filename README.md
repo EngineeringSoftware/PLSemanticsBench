@@ -47,14 +47,19 @@ style="display: inline-block !important;
 - [Citation](#citation)
 
 ## About
-PLSemanticsBench is the first counterfactual programming language (PL) semantics dataset for evaluating rule-conditioned reasoning in LLMs. 
-We use program execution as a lens for evaluating it, via three tasks:
+PLSemanticsBench is the first counterfactual programming language (PL) semantics dataset for evaluating rule-conditioned reasoning in LLMs.
+It contains the semantics formalization of `C*`, a featherweight C programming language, in two approaches: small-step 
+operational semantics and the K-framework semantics. Execution of `C*` programs under counterfactual and standard semantics is then used as a 
+lens for evaluating rule-conditioned reasoning in LLMs via three tasks:
 
 | Task | Description |
 |------|-------------|
 | ✨ **PredState**| Predicts the final program state |
 | ✨ **PredRule** | Predicts the ordered sequence of semantic rules needed to evaluate a program|
 | ✨ **PredTrace**| Predicts the step-by-step execution of a program |
+
+It also includes auxiliary tasks `nl2rule` and `rule2nl` to rule out formal notation understanding as an influencing
+factor.  
 
 You must implement [BaseRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/base_experiment.py)(`_query` method) to evaluate your models. We provide two example implementations for OpenAI models ([GPTRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/gpt_experiment.py)) and Ollama models ([OllamaRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/ollama_experiment.py)).
 
