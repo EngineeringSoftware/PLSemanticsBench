@@ -17,14 +17,7 @@
   </p>
 </div>
 
-<div align="center" style="display: flex; align-items: center; justify-content: center;">
-
-[![Website](https://img.shields.io/badge/Project_Page-PLSemanticsBench-blueviolet)](https://engineeringsoftware.github.io/PLSemanticsBench/)
-[![arXiv](https://img.shields.io/badge/arXiv-2510.03415v3-b31b1b.svg)](https://arxiv.org/pdf/2510.03415v3)
-[![Code](https://img.shields.io/badge/Code-GitHub-black)](https://github.com/EngineeringSoftware/PLSemanticsBench)
-[![Dataset](https://img.shields.io/badge/🤗-Dataset-yellow)](https://huggingface.co/datasets/EngineeringSoftware/PLSemanticsBench)
-
-</div>
+<p align="center"><a href="https://engineeringsoftware.github.io/PLSemanticsBench/"><img alt="Project Page" src="https://img.shields.io/badge/Project_Page-PLSemanticsBench-blueviolet"></a> <a href="https://arxiv.org/pdf/2510.03415v3"><img alt="arXiv" src="https://img.shields.io/badge/arXiv-2510.03415v3-b31b1b.svg"></a> <a href="https://github.com/EngineeringSoftware/PLSemanticsBench"><img alt="Code" src="https://img.shields.io/badge/Code-GitHub-black"></a> <a href="https://huggingface.co/datasets/EngineeringSoftware/PLSemanticsBench"><img alt="Dataset" src="https://img.shields.io/badge/🤗-Dataset-yellow"></a></p>
 
 <div align="center">
   <img
