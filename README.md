@@ -17,7 +17,7 @@
   </p>
 </div>
 
-<div align="center">
+<div align="center" style="display: flex; align-items: center; justify-content: center;">
 
 [![Website](https://img.shields.io/badge/Project_Page-PLSemanticsBench-blueviolet)](https://engineeringsoftware.github.io/PLSemanticsBench/)
 [![arXiv](https://img.shields.io/badge/arXiv-2510.03415v3-b31b1b.svg)](https://arxiv.org/pdf/2510.03415v3)
