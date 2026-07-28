@@ -58,8 +58,8 @@ lens for evaluating rule-conditioned reasoning in LLMs via three tasks:
 | ✨ **PredRule** | Predicts the ordered sequence of semantic rules needed to evaluate a program|
 | ✨ **PredTrace**| Predicts the step-by-step execution of a program |
 
-It also includes the below auxiliary tasks to rule out formal notation understanding as an influencing
-factor.  
+It also includes the auxiliary tasks below, to rule out formal notation understanding as an influencing
+factor:  
 
 | Task | Description |
 |------|-------------|
@@ -162,14 +162,14 @@ You can load the dataset using the `datasets` library. Here is an example:
 ```python
 from datasets import load_dataset
 
-# Load PredState task with standard semantics (uk) and K-semantics formalization (K) and with the Human Written (human-written) dataset
-predstate_IMP_K_uk_human_written = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predstate-IMP-K-uk-human-written")
+# Load PredState task with standard semantics under K formalization for the LLM Translated dataset
+predstate_K_standard_llm_translated = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predstate/K-Standard-llm-translated")
 
-# Load PredRule task with nonstandard semantics (mk) ans SOS formalization (SOS) and with the LLM Translated (llm-translated) dataset
-predrule_IMP_SOS_mk_llm_translated = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predrule-IMP-SOS-mk-llm-translated")
+# Load PredRule task with nonstandard semantics under S formalization for the Human Written dataset
+predrule_S_nonstandard_human_written = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predrule/S-NonStandard-human-written")
 
-# Load PredState task with no-semantics (nk) and with the Fuzzer Generated (fuzzer-generated) dataset
-predstate_IMP_nk_fuzzer_generated = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predstate-IMP-nk-fuzzer-generated")
+# Load PredState task with standard semantics but without explicitly providing the formal semantics rules, for the Fuzzer Generated dataset
+predstate_none_fuzzer_generated = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predstate/None-fuzzer-generated")
 ```
 
 ### Splits
