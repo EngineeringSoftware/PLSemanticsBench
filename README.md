@@ -21,7 +21,7 @@
 
 <div align="center">
   <img
-src="https://raw.githubusercontent.com/EngineeringSoftware/PLSemanticsBench/main/docs/logo.png"
+src="https://raw.githubusercontent.com/EngineeringSoftware/PLSemanticsBench/main/docs/icons/logo.png"
 alt="PLSemanticsBench logo"
 width="80">
 </div>
