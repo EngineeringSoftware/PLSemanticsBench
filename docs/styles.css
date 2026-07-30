@@ -215,7 +215,19 @@ h1 em:last-child { color: var(--cyan); }
   border-radius: 50%; 
   /* box-shadow: 0 0 0 5px rgba(121,224,157,.08);  */
 }
-.visual-id { margin-left: auto; }
+.visual-id {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  margin-left: auto;
+  text-transform: none;
+}
+.hf-logo {
+  display: inline-block;
+  width: auto;
+  height: 1.5em;
+  vertical-align: middle;
+}
 .semantics-tabs, .task-tabs {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 16px 18px 12px; padding: 5px;
   background: rgba(4, 10, 18, 0.58); border-radius: 12px;

@@ -47,7 +47,7 @@
           <img class="brand-logo" src="icons/logo.png" alt="PLSemanticsBench" />
         </div>
         <p class="hero-deck">
-          Can a language model execute a program according to explicitly supplied formal rules—even when those rules contradict their priors?
+          Can a language model condition its reasoning on explicitly supplied formal semantics—even when those semantics contradict their priors?
         </p>
 
         <div class="authors" aria-label="Authors">
@@ -124,88 +124,84 @@
               <img class="eyebrow-icon" src="icons/caution.png" alt="" aria-hidden="true">
               <p class="eyebrow">The problem</p>
             </div>
-            <h2>Models execute the symbol they remember, not the rule they are given.</h2>
+            <h2>Models rely on the semantics they remember, not the semantics they are given.</h2>
           </div>
-          <p>
-            This is not a contrived scenario. Operator overloading in C++, Python, Scala, and DSLs like Triton
-            routinely assigns new meanings to familiar operators—or introduces symbols a model has never seen. A trustworthy
-            interpreter must follow the specification it is handed, not its habits.
-          </p>
-        </div>
-
-        <div class="problem-layout">
           <div class="problem-copy">
-            <h3>The 2 + 2 experiment</h3>
             <p>
-              Ask a model to execute <code>x = 2 + 2</code> under standard semantics, and it answers <strong>4</strong> every time.
-              Now supply a complete formal semantics in the prompt in which <code>+</code> is defined—rule by rule—to perform
-              <em>subtraction</em>, and ask again.
+              Ask a model to execute <code>2 + 2</code> under standard semantics where <code>+</code> means addition, and it 
+              answers <strong>4</strong> every time. Now supply a complete formal semantics in the prompt in which 
+              <code>+</code> is defined—rule by rule—to perform <em>subtraction</em>, and ask again.
             </p>
             <div class="experiment-steps">
               <div class="experiment-step good-step">
-                <span class="micro-label">Standard rules · “+ is addition”</span>
-                <p><code>x = 2 + 2</code> → models answer <strong>4</strong> <span class="check">✓</span></p>
+                <span class="micro-label">Standard semantics · “+ is addition”</span>
+                <p><code>2 + 2</code> → models answer <strong>4</strong> <span class="check">✓</span></p>
               </div>
               <div class="experiment-step bad-step">
-                <span class="micro-label">Swapped rules · “+ is subtraction”</span>
-                <p><code>x = 2 + 2</code> → models still answer <strong>4</strong> <span class="cross">✗</span> <em>(should be 0)</em></p>
+                <span class="micro-label">Counterfactual semantics · “+ is subtraction”</span>
+                <p><code>2 + 2</code> → models still answer <strong>4</strong> <span class="cross">✗</span> <em>(should be 0)</em></p>
               </div>
             </div>
             <p>
-              They are not interpreting—they are recalling <em>“+ means add”</em> from training data. The same conflict
-              arises for every operator, comparison, and keyword. PLSemanticsBench turns this observation into a
-              controlled, execution-grounded measurement.
+              They are not conditioning on the semantics they are given; instead, they are recalling <em>“+ means add”</em> from their prior knowledge. 
+            </p>
+            <p>
+              This scenario is neither contrived nor purely synthetic; operator overloading in C++, Python, Scala, and DSLs such as 
+              Triton routinely assigns new meanings to familiar operators—or introduces symbols a model has never encountered. Models 
+              expected to reason about code in these languages must be able to follow the semantic specifications they are given 
+              for symbols rather than simply relying on their prior knowledge.
             </p>
           </div>
+        </div>
 
-          <div class="hero-visual" aria-label="Interactive semantics comparison">
-            <div class="visual-topline">
-              <span class="live-dot"></span>
-              <span>Example</span>
-              <span class="visual-id">C★ / arithmetic</span>
+        <div class="hero-visual" aria-label="Interactive semantics comparison">
+          <div class="visual-topline">
+            <span class="live-dot"></span>
+            <span>Try it out!</span>
+            <span class="visual-id">Powered by HuggingFace <img src="icons/hf-logo.png" alt="HuggingFace" class="hf-logo"> ZeroGPU</span>
+          </div>
+
+          <div class="semantics-tabs" role="tablist" aria-label="Choose semantics">
+            <button class="semantics-tab active" data-mode="standard" role="tab" aria-selected="true">Standard</button>
+            <button class="semantics-tab" data-mode="swap" role="tab" aria-selected="false">KeywordSwap</button>
+            <button class="semantics-tab" data-mode="obf" role="tab" aria-selected="false">KeywordObf</button>
+          </div>
+
+          <div class="program-window">
+            <div class="window-bar">
+              <span></span><span></span><span></span>
+              <strong>example.cstar</strong>
             </div>
-
-            <div class="semantics-tabs" role="tablist" aria-label="Choose semantics">
-              <button class="semantics-tab active" data-mode="standard" role="tab" aria-selected="true">Standard</button>
-              <button class="semantics-tab" data-mode="swap" role="tab" aria-selected="false">KeywordSwap</button>
-              <button class="semantics-tab" data-mode="obf" role="tab" aria-selected="false">KeywordObf</button>
-            </div>
-
-            <div class="program-window">
-              <div class="window-bar">
-                <span></span><span></span><span></span>
-                <strong>example.cstar</strong>
-              </div>
-              <pre class="code"><span class="ln">1</span> <span class="kw">int</span> x;
+            <pre class="code"><span class="ln">1</span> <span class="kw">int</span> x;
 <span class="ln">2</span> x = (<label for="left-value" class="sr-only">Left operand</label><input id="left-value" class="code-input" type="number" value="2" inputmode="numeric"> <span id="program-operator" class="operator">+</span> <label for="right-value" class="sr-only">Right operand</label><input id="right-value" class="code-input" type="number" value="2" inputmode="numeric">);</pre>
-            </div>
+          </div>
 
-            <div class="rule-card">
-              <div>
-                <p class="micro-label">Supplied rule</p>
-                <p id="rule-description" class="rule-description"><code>+</code> evaluates as integer addition.</p>
-              </div>
-              <div class="inference-rule" aria-label="Formal semantic rule">
-                <span id="rule-premise">v₃ = v₁ + v₂</span>
-                <span class="rule-line"></span>
-                <span id="rule-conclusion">⟨v₁ + v₂, σ⟩ → ⟨v₃, σ⟩</span>
-              </div>
+          <div class="rule-card">
+            <div>
+              <p class="micro-label">Supplied rule</p>
+              <p id="rule-description" class="rule-description"><code>+</code> evaluates as integer addition.</p>
             </div>
+            <div class="inference-rule" aria-label="Formal semantic rule">
+              <span id="rule-premise">v₃ = v₁ + v₂</span>
+              <span class="rule-line"></span>
+              <span id="rule-conclusion">⟨v₁ + v₂, σ⟩ → ⟨v₃, σ⟩</span>
+            </div>
+          </div>
 
-            <div class="answer-grid">
-              <div class="answer rule-answer">
-                <p class="micro-label">Faithful interpreter</p>
-                <strong>x = <span id="semantic-answer">4</span></strong>
-                <span class="answer-status good">follows semantics</span>
-              </div>
-              <div class="answer prior-answer">
-                <p class="micro-label">Prior-driven model</p>
-                <strong>x = <span id="prior-answer">4</span></strong>
-                <span id="prior-status" class="answer-status neutral">same answer</span>
-              </div>
+          <div class="answer-grid">
+            <div class="answer rule-answer">
+              <p class="micro-label">Faithful interpreter</p>
+              <strong>x = <span id="semantic-answer">4</span></strong>
+              <span class="answer-status good">follows semantics</span>
+            </div>
+            <div class="answer prior-answer">
+              <p class="micro-label">Prior-driven model</p>
+              <strong>x = <span id="prior-answer">4</span></strong>
+              <span id="prior-status" class="answer-status neutral">same answer</span>
             </div>
           </div>
         </div>
+
       </div>
     </section>
 
