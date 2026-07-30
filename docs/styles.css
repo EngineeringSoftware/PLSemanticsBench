@@ -1455,10 +1455,11 @@ footer {
 .chart-group-label {
   margin-top: 8px;
   color: #7c8b9c;
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 850;
   text-transform: uppercase;
   letter-spacing: .12em;
+  text-align: center;
 }
 .chart-group-label:first-child { margin-top: 0; }
 
