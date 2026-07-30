@@ -257,7 +257,3 @@ An example of a data point from the `predstate/None-human-written` split:
   booktitle = {ICML}, 
 }
 ```
-
-
-## License
-This project is licensed under the MIT License.
