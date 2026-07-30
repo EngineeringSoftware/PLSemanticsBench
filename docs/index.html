@@ -167,37 +167,46 @@
             <button class="semantics-tab" data-mode="obf" role="tab" aria-selected="false">Counterfactual 2: Novel Symbols</button>
           </div>
 
-          <div class="program-window">
-            <div class="window-bar">
-              <span></span><span></span><span></span>
-              <strong>example.cstar</strong>
-            </div>
-            <pre class="code"><span class="ln">1</span> <span class="kw">int</span> x;
+          <div class="demo-section">
+            <div class="program-container">
+              <div class="program-window">
+                <div class="window-bar">
+                  <span></span><span></span><span></span>
+                  <strong>C<sup><small>★</small></sup> Program</strong>
+                </div>
+                <pre class="code"><span class="ln">1</span> <span class="kw">int</span> x;
 <span class="ln">2</span> x = (<label for="left-value" class="sr-only">Left operand</label><input id="left-value" class="code-input" type="number" value="2" inputmode="numeric"> <span id="program-operator" class="operator">+</span> <label for="right-value" class="sr-only">Right operand</label><input id="right-value" class="code-input" type="number" value="2" inputmode="numeric">);</pre>
-          </div>
+              </div>
+              <div class="answer-grid">
+                <div class="answer rule-answer">
+                  <p class="micro-label">Faithful interpreter</p>
+                  <strong>x = <span id="semantic-answer">4</span></strong>
+                  <span class="answer-status good">follows semantics</span>
+                </div>
+                <div class="answer prior-answer">
+                  <p class="micro-label">Prior-driven model</p>
+                  <strong>x = <span id="prior-answer">4</span></strong>
+                  <span id="prior-status" class="answer-status neutral">same answer</span>
+                </div>
+              </div>
+            </div>
 
-          <div class="rule-card">
-            <div>
-              <p class="micro-label">Supplied rule</p>
-              <p id="rule-description" class="rule-description"><code>+</code> evaluates as integer addition.</p>
-            </div>
-            <div class="inference-rule" aria-label="Formal semantic rule">
-              <span id="rule-premise">v₃ = v₁ + v₂</span>
-              <span class="rule-line"></span>
-              <span id="rule-conclusion">⟨v₁ + v₂, σ⟩ → ⟨v₃, σ⟩</span>
-            </div>
-          </div>
-
-          <div class="answer-grid">
-            <div class="answer rule-answer">
-              <p class="micro-label">Faithful interpreter</p>
-              <strong>x = <span id="semantic-answer">4</span></strong>
-              <span class="answer-status good">follows semantics</span>
-            </div>
-            <div class="answer prior-answer">
-              <p class="micro-label">Prior-driven model</p>
-              <strong>x = <span id="prior-answer">4</span></strong>
-              <span id="prior-status" class="answer-status neutral">same answer</span>
+            <div class="rule-window">
+              <div class="window-bar">
+                <span></span><span></span><span></span>
+                <strong>C<sup><small>★</small></sup> Small-step Operational Semantics</strong>
+              </div>
+              <div class="rule-card">
+                <div>
+                  <p class="micro-label rule-description">"<code>+</code>" Semantic Rule</p>
+                  <p id="rule-description" class="rule-description"><code>+</code> evaluates as integer addition.</p>
+                </div>
+                <div class="inference-rule" aria-label="Formal semantic rule">
+                  <span id="rule-premise">v₃ = v₁ + v₂</span>
+                  <span class="rule-line"></span>
+                  <span id="rule-conclusion">⟨v₁ <code>+</code> v₂, σ⟩ → ⟨v₃, σ⟩</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

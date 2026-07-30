@@ -238,8 +238,26 @@ h1 em:last-child { color: var(--cyan); }
   cursor: pointer; font-size: 11px; font-weight: 800; letter-spacing: .02em;
 }
 .semantics-tab.active, .task-tab.active { color: #07131b; background: var(--cyan); }
+.program-container {
+  margin: 0;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  overflow: hidden;
+  width: 60%;
+}
 .program-window {
-  margin: 0 18px 12px; border-radius: 13px; overflow: hidden; border: 1px solid var(--line); background: #eeeff0;
+  border-radius: 13px;
+  border: 1px solid var(--line);
+  background: #eeeff0;
+  overflow: auto;
+  margin: 0;
+}
+.demo-section {
+  display: flex; 
+  gap: 10px; 
+  justify-content: space-between; 
+  margin: 0 18px 12px;
 }
 .window-bar, .terminal-bar {
   height: 33px; display: flex; align-items: center; gap: 6px; padding: 0 12px; background: rgba(255,255,255,.035); border-bottom: 1px solid var(--line);
@@ -261,18 +279,29 @@ h1 em:last-child { color: var(--cyan); }
 }
 .code-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .code-input:focus { border-color: var(--cyan); }
+.rule-window {
+  margin: 0; display: flex; flex-direction: column;
+  border: 1px solid rgba(86,215,208,.2); border-radius: 13px; background: var(--cyan-soft);
+  width: 38%;
+}
 .rule-card {
-  margin: 0 18px 12px; display: grid; grid-template-columns: 1fr 1.15fr; gap: 18px; align-items: center;
-  border: 1px solid rgba(86,215,208,.2); border-radius: 13px; background: var(--cyan-soft); padding: 15px;
+  margin: 0; 
+  display: grid; 
+  grid-template-columns: 1fr 1.15fr; 
+  gap: 18px; 
+  align-items: center;
+  background: inherit;
+  padding: 15px;
 }
 .micro-label {
   margin-bottom: 5px; color: #8496ae; text-transform: uppercase; letter-spacing: .13em; font-size: 9px; font-weight: 850;
 }
 .rule-description { margin: 0; font-size: 12px; color: #cfdae8; }
 .rule-description code { color: var(--gold); }
-.inference-rule { display: flex; flex-direction: column; align-items: center; color: #dce9f6; font-family: Georgia, serif; font-size: 12px; }
+.inference-rule { display: flex; flex-direction: column; align-items: center; color: #dce9f6; font-family: Georgia, serif; font-size: 14px; }
+.inference-rule code { color: var(--gold); }
 .rule-line { width: 100%; height: 1px; background: #7a8aa0; margin: 5px 0; }
-.answer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 18px 12px; }
+.answer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0; }
 .answer { padding: 13px 14px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.035); position: relative; }
 .answer strong { font-family: Georgia, serif; font-size: 24px; font-weight: 500; }
 .answer-status { position: absolute; right: 10px; bottom: 10px; font-size: 9px; border-radius: 20px; padding: 3px 7px; font-weight: 750; }

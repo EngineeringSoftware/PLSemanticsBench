@@ -65,11 +65,12 @@ function updateSemantics() {
   const b = numericValue(rightInput);
   const semantic = mode.calculate(a, b);
   const prior = a + b;
+  const operatorMarkup = `<code>${mode.operator}</code>`;
 
   operatorEl.textContent = mode.operator;
   ruleDescription.innerHTML = mode.ruleDescription;
   rulePremise.textContent = mode.premise;
-  ruleConclusion.textContent = mode.conclusion;
+  ruleConclusion.innerHTML = `⟨v₁ ${operatorMarkup} v₂, σ⟩ → ⟨v₃, σ⟩`;
   semanticAnswer.textContent = semantic;
   priorAnswer.textContent = prior;
 
