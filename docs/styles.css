@@ -221,11 +221,12 @@ h1 em:last-child { color: var(--cyan); }
   gap: 0.35em;
   margin-left: auto;
   text-transform: none;
+  letter-spacing: normal;
 }
 .hf-logo {
   display: inline-block;
   width: auto;
-  height: 1.5em;
+  height: 1.3em;
   vertical-align: middle;
 }
 .semantics-tabs, .task-tabs {
@@ -1041,14 +1042,14 @@ footer {
   color: var(--ink);
   margin-bottom: 14px;
 }
-.problem-copy p { color: #4a5b6e; font-size: 17px; line-height: 1.7; }
+.problem-copy p { color: #4a5b6e; font-size: 20px; line-height: 1.7; }
 .problem-copy code {
   padding: 1px 6px;
   border-radius: 6px;
   background: rgba(22, 39, 58, .06);
   font-size: .88em;
 }
-.experiment-steps { display: grid; gap: 12px; margin: 24px 0; }
+.experiment-steps { display: flex; gap: 80px; margin: 24px 0; align-items: center; justify-content: center; }
 .experiment-step {
   padding: 16px 19px;
   border: 1px solid var(--line);
