@@ -167,8 +167,12 @@ h1 em:last-child { color: var(--cyan); }
 }
 .button {
   display: inline-flex; align-items: center; gap: 8px; min-height: 34px; padding: 0 15px;
-  border: 1px solid var(--line); border-radius: 20px; 
-  background: black;
+  /* border: 1px solid var(--line);  */
+  border-radius: 20px; 
+  /* background: black; */
+  background: #334252;
+  border-color: #334252;
+  color: #f8fbfb;
   /* background: rgba(255,255,255,0.035); */
   text-decoration: none; font-size: 13px; font-weight: 750;
 }
@@ -676,23 +680,23 @@ h1 em:last-child {
 }
 
 .button {
-  border: 1px solid black;
-  background: black;
-  color: #cccccc;
+  border: 1px solid #334252;
+  background: #334252;
+  color: #f8fbfb;
   box-shadow: 0 6px 16px rgba(22, 39, 58, 0.04);
 }
 
 .button:hover {
   border-color: var(--paper); 
-  background: black;
-  color: #cccccc;
+  background: #334252;
+  color: #f8fbfb;
 }
 
-.button.primary {
+/* .button.primary {
   color: #f8fbfb;
   background: var(--cyan);
   border-color: var(--cyan);
-}
+} */
 
 .hero-visual {
   border-color: rgba(22, 39, 58, 0.12);
@@ -1222,7 +1226,8 @@ footer {
   /* border-left: 5px solid var(--coral); */
   border-radius: var(--radius);
   /* background: linear-gradient(150deg, rgba(201, 88, 81, .07), rgba(255, 255, 255, .8)); */
-  background: #E6F2FF;
+  /* background: #E6F2FF; */
+  background: #e8f1ef;
   /* box-shadow: 0 14px 40px rgba(22, 39, 58, .05); */
 }
 .finding-banner .micro-label { color: var(--coral); font-size: 11px; }
@@ -1789,7 +1794,8 @@ footer {
 
 .outlier-card {
   border: 0;
-  background: #baed9152;
+  /* background: #baed9152; */
+  background: rgba(78, 141, 104, 0.12);
   box-shadow: none;
 }
 
@@ -1837,4 +1843,239 @@ footer {
   .finding-banner { padding: 26px 22px; }
   .hypotheses-grid, .summary-grid { grid-template-columns: 1fr; }
   .bars.four { grid-template-columns: 1fr; }
+}
+
+:root {
+  --cyan-text: #236f73;
+  --gold-text: #806027;
+  --coral-text: #9a4f4a;
+  --violet-text: #66598e;
+  --green-text: #3f7557;
+  --cyan-on-dark: #78c5c2;
+  --gold-on-dark: #d5af6f;
+  --coral-on-dark: #d58b85;
+  --violet-on-dark: #aaa0d1;
+  --green-on-dark: #86b99a;
+}
+
+h1 {
+  font-size: clamp(42px, 4.4vw, 62px);
+  line-height: 1.04;
+  max-width: 1120px;
+}
+
+@media (max-width: 790px) {
+  h1 {
+    font-size: clamp(35px, 10vw, 48px);
+    line-height: 1.06;
+  }
+}
+
+.authors a {
+  color: var(--cyan-text);
+  text-decoration-color: rgba(35, 111, 115, 0.35);
+  text-underline-offset: 3px;
+}
+
+.authors a:hover {
+  color: #195c60;
+  text-decoration: underline;
+}
+
+.button {
+  border-color: #334252;
+  background: #334252;
+  color: #f8fbfb;
+  box-shadow: 0 7px 18px rgba(34, 50, 67, 0.12);
+  transition: transform 160ms ease, background-color 160ms ease,
+              border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.button:hover {
+  border-color: #263543;
+  background: #263543;
+  color: #ffffff;
+  box-shadow: 0 9px 22px rgba(34, 50, 67, 0.16);
+  transform: translateY(-1px);
+}
+
+
+.finding-banner {
+  border: 1px solid rgba(45, 142, 147, 0.20);
+  border-left: 4px solid var(--cyan);
+  background:
+    linear-gradient(135deg, rgba(45, 142, 147, 0.11), rgba(255, 255, 255, 0.72));
+  box-shadow: 0 10px 28px rgba(34, 50, 67, 0.035);
+}
+
+.finding-banner .micro-label {
+  color: var(--coral-text);
+}
+
+.experiment-step,
+.shift-card,
+.step-card,
+.hypotheses-grid article,
+.findings-grid article,
+.fix-grid article,
+.attribution-card {
+  border-color: rgba(34, 50, 67, 0.11);
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: 0 10px 28px rgba(34, 50, 67, 0.035);
+}
+
+.experiment-step p,
+.step-card h3,
+.hypotheses-grid h3,
+.findings-grid h3,
+.fix-grid h3,
+.attribution-list,
+.attribution-list a,
+.shift-card h3 {
+  color: var(--ink);
+}
+
+.experiment-step em,
+.step-card > p,
+.hypotheses-grid p,
+.findings-grid p,
+.fix-grid p,
+.attribution-copy,
+.shift-card > p:last-child {
+  color: var(--muted);
+}
+
+.shift-card .mapping strong,
+.fix-grid p strong {
+  color: var(--ink);
+}
+
+.shift-card .mapping span,
+.step-card .micro-label,
+.hypotheses-grid .micro-label,
+.findings-grid .micro-label,
+.attribution-card .micro-label {
+  color: #526579;
+}
+
+.shift-card .mapping code,
+.step-card .stage-icon {
+  color: var(--ink);
+  background: rgba(34, 50, 67, 0.055);
+}
+
+.step-result {
+  border-color: rgba(34, 50, 67, 0.10);
+  background: rgba(34, 50, 67, 0.035);
+  color: #526579;
+}
+
+.step-result.good-note {
+  border-color: rgba(78, 141, 104, 0.24);
+  background: rgba(78, 141, 104, 0.10);
+  color: var(--green-text);
+}
+
+.fix-grid .micro-label {
+  color: var(--coral-text);
+}
+
+.fix-verdict {
+  border-color: rgba(183, 106, 101, 0.24);
+  background: rgba(183, 106, 101, 0.08);
+  color: #85443f;
+}
+
+.outlier-card {
+  border: 1px solid rgba(78, 141, 104, 0.25);
+  background:
+    linear-gradient(135deg, rgba(78, 141, 104, 0.13), rgba(255, 255, 255, 0.82));
+  box-shadow: 0 10px 28px rgba(34, 50, 67, 0.035);
+}
+
+.outlier-card .micro-label {
+  color: var(--green-text);
+}
+
+.outlier-card h3 {
+  color: var(--ink);
+}
+
+.outlier-card > p {
+  color: #45576a;
+}
+
+.mutation-table thead code {
+  color: var(--cyan-text);
+}
+
+.mutation-table .swap-row code {
+  color: var(--coral-text);
+}
+
+.mutation-table .obf-row code {
+  color: var(--violet-text);
+}
+
+.mutation-card .micro-label,
+.splits-card .micro-label,
+.stack-card .micro-label,
+.results-card .micro-label,
+.task-panel .micro-label,
+.pipeline .micro-label {
+  color: #c2cfdd;
+}
+
+.experiment-step.good-step .micro-label {
+  color: var(--green-text);
+}
+
+.experiment-step.bad-step .micro-label {
+  color: var(--coral-text);
+}
+
+.experiment-step.good-step {
+  border-color: rgba(78, 141, 104, 0.25);
+  background: rgba(78, 141, 104, 0.08);
+}
+
+.experiment-step.bad-step {
+  border-color: rgba(183, 106, 101, 0.24);
+  background: rgba(183, 106, 101, 0.075);
+}
+
+.shift-card.standard .micro-label,
+.shift-card.standard .mapping code {
+  color: var(--cyan-text);
+}
+
+.shift-card.standard .mapping code {
+  background: var(--cyan-soft);
+}
+
+.shift-card.swap .micro-label,
+.shift-card.swap .mapping code {
+  color: var(--coral-text);
+}
+
+.shift-card.swap .mapping code {
+  background: var(--coral-soft);
+}
+
+.shift-card.obf .micro-label,
+.shift-card.obf .mapping code {
+  color: var(--violet-text);
+}
+
+.shift-card.obf .mapping code {
+  background: var(--violet-soft);
+}
+
+.step-num,
+.hypotheses-grid code {
+  color: var(--cyan-text);
+}
+
+.hypotheses-grid span {
+  color: var(--gold-text);
 }
