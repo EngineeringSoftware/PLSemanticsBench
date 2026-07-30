@@ -1801,6 +1801,27 @@ footer {
   color: #45576a;
 }
 
+.mutation-table thead code {
+  background: rgba(45, 142, 147, 0.08);
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--cyan);
+}
+
+.mutation-table .swap-row code {
+  background: rgba(183, 106, 101, 0.08);
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--coral);
+}
+
+.mutation-table .obf-row code {
+  background: rgba(124, 113, 170, 0.08);
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--violet);
+}
+
 @media (max-width: 1050px) {
   .problem-layout { grid-template-columns: 1fr; gap: 44px; }
   .problem-layout .hero-visual { position: static; max-width: 690px; }
