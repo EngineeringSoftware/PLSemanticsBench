@@ -156,6 +156,18 @@ const GROUP_LABELS = {
   reasoning: "Reasoning"
 };
 
+const MODEL_ICON_RULES = [
+  { match: /^Qwen|^QwQ/i, src: "icons/qwen.png", alt: "Qwen" },
+  { match: /^Llama/i, src: "icons/meta-color.png", alt: "Meta" },
+  { match: /^DS-/i, src: "icons/deepseek.png", alt: "DeepSeek" },
+  { match: /^GPT|^o3/i, src: "icons/openai.png", alt: "OpenAI" },
+  { match: /^Gemini/i, src: "icons/gemini-color.png", alt: "Google Gemini" }
+];
+
+function getModelIcon(modelName) {
+  return MODEL_ICON_RULES.find(({ match }) => match.test(modelName)) ?? null;
+}
+
 const RESULTS = {
   state: {
     metric: "PredState · exact-match accuracy (%)",
@@ -167,10 +179,10 @@ const RESULTS = {
           { model: "Qwen2.5-Inst 32B", group: "nonreasoning", na: 50, k: [29, 4, 12], s: [33, 4, 19] },
           { model: "Llama-3.3 70B", group: "nonreasoning", na: 32, k: [29, 4, 12], s: [25, 5, 12] },
           { model: "GPT-4o-mini", group: "nonreasoning", na: 31, k: [26, 6, 8], s: [24, 6, 8] },
-          { model: "Qwen2.5-Inst 14B-CoT", group: "cot", na: 73, k: [70, 2, 48], s: [68, 4, 41] },
-          { model: "Qwen2.5-Inst 32B-CoT", group: "cot", na: 81, k: [77, 8, 56], s: [69, 3, 33] },
-          { model: "Llama-3.3 70B-CoT", group: "cot", na: 75, k: [75, 3, 56], s: [77, 2, 48] },
-          { model: "GPT-4o-mini-CoT", group: "cot", na: 68, k: [78, 2, 38], s: [65, 3, 27] },
+          { model: "Qwen2.5-Inst 14B", group: "cot", na: 73, k: [70, 2, 48], s: [68, 4, 41] },
+          { model: "Qwen2.5-Inst 32B", group: "cot", na: 81, k: [77, 8, 56], s: [69, 3, 33] },
+          { model: "Llama-3.3 70B", group: "cot", na: 75, k: [75, 3, 56], s: [77, 2, 48] },
+          { model: "GPT-4o-mini", group: "cot", na: 68, k: [78, 2, 38], s: [65, 3, 27] },
           { model: "DS-Qwen 14B", group: "reasoning", na: 65, k: [81, 2, 40], s: [58, 2, 29] },
           { model: "DS-Qwen 32B", group: "reasoning", na: 84, k: [93, 21, 72], s: [95, 3, 77] },
           { model: "DS-Llama 70B", group: "reasoning", na: 80, k: [88, 2, 58], s: [89, 2, 59] },
@@ -307,9 +319,16 @@ function renderChart() {
       lastGroup = row.group;
     }
     const [std, swap, obf] = row[formalizationKey];
+    const icon = getModelIcon(row.model);
+    const iconHtml = icon
+      ? `<img class="model-icon" src="${icon.src}" alt="${icon.alt} logo" title="${icon.alt}">`
+      : "";
     html += `
       <div class="chart-row">
-        <div class="chart-label" title="${row.model}">${row.model}</div>
+        <div class="chart-label" title="${row.model}">
+          ${iconHtml}
+          <span class="chart-label-text">${row.model}</span>
+        </div>
         <div class="bars${showNa ? " four" : ""}">
           ${showNa ? bar(row.na, "na", "No semantics") : ""}
           ${bar(std, "std", "Standard")}
