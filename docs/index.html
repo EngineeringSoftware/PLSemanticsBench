@@ -157,7 +157,7 @@
         <div class="hero-visual" aria-label="Interactive semantics comparison">
           <div class="visual-topline">
             <span class="live-dot"></span>
-            <span>Try it out (<a href="#benchmark" style="text-decoration: underline; color: #0000BB; text-transform: none;">PredState task</a>)!</span>
+            <span>Try it out (<a href="#benchmark" style="text-decoration: underline; color: inherit; text-transform: none;">PredState task</a>)!</span>
             <span class="visual-id">Powered by HuggingFace <img src="icons/hf-logo.png" alt="HuggingFace" class="hf-logo"> ZeroGPU</span>
           </div>
 
@@ -169,8 +169,8 @@
 
           <div class="demo-section">
             <div class="program-container">
-              <div class="program-window">
-                <div class="window-bar">
+              <div class="task-terminal">
+                <div class="terminal-bar">
                   <span></span><span></span><span></span>
                   <strong>C<sup><small>★</small></sup> Program</strong>
                 </div>
@@ -178,12 +178,12 @@
 <span class="ln">2</span> x = (<label for="left-value" class="sr-only">Left operand</label><input id="left-value" class="code-input" type="number" value="2" inputmode="numeric"> <span id="program-operator" class="operator">+</span> <label for="right-value" class="sr-only">Right operand</label><input id="right-value" class="code-input" type="number" value="2" inputmode="numeric">);</pre>
               </div>
               <div class="answer-grid">
-                <div class="answer rule-answer">
+                <div class="answer rule-answer task-terminal">
                   <p class="micro-label">Faithful interpreter</p>
                   <strong>x = <span id="semantic-answer">4</span></strong>
                   <span class="answer-status good">follows semantics</span>
                 </div>
-                <div class="answer prior-answer">
+                <div class="answer prior-answer task-terminal">
                   <p class="micro-label">Prior-driven model</p>
                   <strong>x = <span id="prior-answer">4</span></strong>
                   <span id="prior-status" class="answer-status neutral">same answer</span>
@@ -191,9 +191,8 @@
               </div>
             </div>
 
-            <div class="rule-window">
-              <div class="window-bar">
-                <span></span><span></span><span></span>
+            <div class="rule-window task-terminal">
+              <div class="terminal-bar">
                 <strong>C<sup><small>★</small></sup> Small-step Operational Semantics</strong>
               </div>
               <div class="rule-card">
@@ -274,7 +273,7 @@
           <article class="shift-card standard">
             <span class="shift-number">01</span>
             <p class="micro-label">Standard</p>
-            <h3>Familiar syntax, familiar meaning</h3>
+            <h3>Familiar syntax;<br />familiar meaning</h3>
             <div class="mapping"><code>+</code><span>means</span><strong>addition</strong></div>
             <p>Syntax and pretrained associations agree. Measures baseline execution ability.</p>
           </article>
@@ -282,7 +281,7 @@
           <article class="shift-card swap">
             <span class="shift-number">02</span>
             <p class="micro-label">KeywordSwap</p>
-            <h3>Familiar syntax, conflicting meaning</h3>
+            <h3>Familiar syntax;<br />conflicting meaning</h3>
             <div class="mapping"><code>-</code><span>means</span><strong>addition</strong></div>
             <p>The strongest test of whether supplied rules override lexical priors.</p>
           </article>
@@ -290,7 +289,7 @@
           <article class="shift-card obf">
             <span class="shift-number">03</span>
             <p class="micro-label">KeywordObf</p>
-            <h3>Novel syntax, explicitly defined meaning</h3>
+            <h3>Novel syntax;<br />explicitly defined meaning</h3>
             <div class="mapping"><code>𐔱</code><span>means</span><strong>addition</strong></div>
             <p>Familiar symbolic cues are removed while rule structure is preserved.</p>
           </article>
