@@ -156,13 +156,13 @@ You can load the dataset using the `datasets` library. Here is an example:
 from datasets import load_dataset
 
 # Load PredState task with standard semantics under K formalization for the LLM Translated dataset
-predstate_K_standard_llm_translated = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predstate/K-Standard-llm-translated")
+predstate_K_standard_llm_translated = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predstate/K_Standard_LLM_Translated")
 
 # Load PredRule task with nonstandard semantics under S formalization for the Human Written dataset
-predrule_S_nonstandard_human_written = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predrule/S-NonStandard-human-written")
+predrule_S_nonstandard_human_written = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predrule/S_NonStandard_Human_Written")
 
 # Load PredState task with standard semantics but without explicitly providing the formal semantics rules, for the Fuzzer Generated dataset
-predstate_none_fuzzer_generated = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predstate/None-fuzzer-generated")
+predstate_none_fuzzer_generated = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predstate/None_Fuzzer_Generated")
 ```
 
 ### Splits
@@ -175,57 +175,57 @@ predstate_none_fuzzer_generated = load_dataset("EngineeringSoftware/PLSemanticsB
   </tr>
   <tr>
     <td rowspan="5">✨ <strong>PredState</strong><br>(Final State Prediction)</td>
-    <td> predstate/None-{dataset-name} </td>
+    <td> predstate/None_{dataset-name} </td>
     <td> No semantics </td>
   </tr>
   <tr>
-    <td> predstate/K-Standard-{dataset-name} </td>
+    <td> predstate/K_Standard_{dataset-name} </td>
     <td>Standard semantics with K formalization</td>
   </tr>
   <tr>
-    <td> predstate/K-NonStandard-{dataset-name} </td>
+    <td> predstate/K_NonStandard_{dataset-name} </td>
     <td>Nonstandard semantics with K formalization</td>
   </tr>
   <tr>
-    <td> predstate/S-Standard-{dataset-name} </td>
+    <td> predstate/S_Standard_{dataset-name} </td>
     <td>Standard semantics with S formalization</td>
   </tr>
   <tr>
-    <td> predstate/S-NonStandard-{dataset-name} </td>
+    <td> predstate/S_NonStandard_{dataset-name} </td>
     <td>Nonstandard semantics with S formalization</td>
   </tr>
   <tr>
     <td rowspan="4">✨ <strong>PredRule</strong><br>(Semantic Rule Prediction)</td>
-    <td> predrule/K-Standard-human-written </td>
+    <td> predrule/K_Standard_Human_Written </td>
     <td>Standard semantics with K formalization</td>
   </tr>
   <tr>
-    <td> predrule/K-NonStandard-human-written </td>
+    <td> predrule/K_NonStandard_Human_Written </td>
     <td>Nonstandard semantics with K formalization</td>
   </tr>
   <tr>
-    <td> predrule/S-Standard-human-written </td>
+    <td> predrule/S_Standard_Human_Written </td>
     <td>Standard semantics with S formalization</td>
   </tr>
   <tr>
-    <td> predrule/S-NonStandard-human-written </td>
+    <td> predrule/S_NonStandard_Human_Written </td>
     <td>Nonstandard semantics with S formalization</td>
   </tr>
   <tr>
     <td rowspan="4">✨ <strong>PredTrace</strong><br>(Execution Trace Prediction)</td>
-    <td> predtrace/K-Standard-human-written </td>
+    <td> predtrace/K_Standard_Human_Written </td>
     <td>Standard semantics with K formalization</td>
   </tr>
   <tr>
-    <td> predtrace/K-NonStandard-human-written </td>
+    <td> predtrace/K_NonStandard_Human_Written </td>
     <td>Nonstandard semantics with K formalization</td>
   </tr>
   <tr>
-    <td> predtrace/S-Standard-human-written </td>
+    <td> predtrace/S_Standard_Human_Written </td>
     <td>Standard semantics with S formalization</td>
   </tr>
   <tr>
-    <td> predtrace/S-NonStandard-human-written </td>
+    <td> predtrace/S_NonStandard_Human_Written </td>
     <td>Nonstandard semantics with S formalization</td>
   </tr>
 </table>
