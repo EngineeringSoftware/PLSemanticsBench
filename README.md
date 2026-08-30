@@ -230,36 +230,36 @@ predstate_none_fuzzer_generated = load_dataset("EngineeringSoftware/PLSemanticsB
   </tr>
   <tr>
     <td rowspan="4">✨ <strong>NL2Rule</strong><br>(Natural language description to semantic rule)</td>
-    <td> predtrace/K_Standard_NumRule5_RandomSampleFalse </td>
+    <td> predtrace/K_Standard_NumRule5 </td>
     <td>Standard semantics with K formalization</td>
   </tr>
   <tr>
-    <td> predtrace/K_NonStandard_NumRule5_RandomSampleFalse </td>
+    <td> predtrace/K_NonStandard_NumRule5 </td>
     <td>Nonstandard semantics with K formalization</td>
   </tr>
   <tr>
-    <td> predtrace/S_Standard_NumRule5_RandomSampleFalse </td>
+    <td> predtrace/S_Standard_NumRule5 </td>
     <td>Standard semantics with S formalization</td>
   </tr>
   <tr>
-    <td> predtrace/S_NonStandard_NumRule5_RandomSampleFalse </td>
+    <td> predtrace/S_NonStandard_NumRule5 </td>
     <td>Nonstandard semantics with S formalization</td>
   </tr>
   <tr>
     <td rowspan="4">✨ <strong>Rule2NL</strong><br>(Semantic rule to natural language description)</td>
-    <td> predtrace/K_Standard_NumDescription5_RandomSampleFalse </td>
+    <td> predtrace/K_Standard_NumDescription5 </td>
     <td>Standard semantics with K formalization</td>
   </tr>
   <tr>
-    <td> predtrace/K_NonStandard_NumDescription5_RandomSampleFalse </td>
+    <td> predtrace/K_NonStandard_NumDescription5 </td>
     <td>Nonstandard semantics with K formalization</td>
   </tr>
   <tr>
-    <td> predtrace/S_Standard_NumDescription5_RandomSampleFalse </td>
+    <td> predtrace/S_Standard_NumDescription5 </td>
     <td>Standard semantics with S formalization</td>
   </tr>
   <tr>
-    <td> predtrace/S_NonStandard_NumDescription5_RandomSampleFalse </td>
+    <td> predtrace/S_NonStandard_NumDescription5 </td>
     <td>Nonstandard semantics with S formalization</td>
   </tr>
 </table>
