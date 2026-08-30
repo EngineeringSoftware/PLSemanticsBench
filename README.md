@@ -43,9 +43,9 @@ lens for evaluating rule-conditioned reasoning in LLMs via three tasks:
 
 | Task | Description |
 |------|-------------|
-| ✨ **PredState**| Predicts the final program state |
-| ✨ **PredRule** | Predicts the ordered sequence of semantic rules needed to evaluate a program|
-| ✨ **PredTrace**| Predicts the step-by-step execution of a program |
+| ✨ **PredState**| Predict the final program state |
+| ✨ **PredRule** | Predict the ordered sequence of semantic rules needed to evaluate a program|
+| ✨ **PredTrace**| Predict the step-by-step execution of a program |
 
 It also includes the auxiliary tasks below, to rule out formal notation understanding as an influencing
 factor:  
