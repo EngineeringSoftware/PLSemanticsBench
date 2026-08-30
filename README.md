@@ -57,8 +57,6 @@ factor:
 | ✨ **NL2Rule**| Select the correct formal semantic rule (out of 5) given its natural language description |
 | ✨ **Rule2NL** | Select the correct natural language description (out of 5) given the formal semantic rule|
 
-You must implement [BaseRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/base_experiment.py)(`_query` method) to evaluate your models. We provide two example implementations for OpenAI models ([GPTRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/gpt_experiment.py)) and Ollama models ([OllamaRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/ollama_experiment.py)).
-
 ## Installation
 
 ### System Requirements
@@ -145,6 +143,10 @@ print(evaluation_result)
     'malformed-count': 0,
 }
 ```
+
+### Extending Providers
+
+You must implement [BaseRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/base_experiment.py)(`_query` method) to evaluate your models. We provide two example implementations for OpenAI models ([GPTRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/gpt_experiment.py)) and Ollama models ([OllamaRunner](https://github.com/EngineeringSoftware/PLSemanticsBench/blob/main/src/plsemanticsbench/core/exps/ollama_experiment.py)).
 
 ## Dataset
 
