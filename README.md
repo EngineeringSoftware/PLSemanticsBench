@@ -229,6 +229,9 @@ predstate_none_fuzzer_generated = load_dataset("EngineeringSoftware/PLSemanticsB
     <td>Nonstandard semantics with S formalization</td>
   </tr>
   <tr>
+    <td colspan="3" align="center"><strong>Auxiliary Tasks</strong></td>
+  </tr>
+  <tr>
     <td rowspan="4">✨ <strong>NL2Rule</strong><br>(Natural language description to semantic rule)</td>
     <td> predtrace/K_Standard_NumRule5 </td>
     <td>Standard semantics with K formalization</td>
