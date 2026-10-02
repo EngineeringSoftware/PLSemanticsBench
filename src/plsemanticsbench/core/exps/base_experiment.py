@@ -9,6 +9,8 @@ from .prompt_maker import (
     make_predstate_prompt,
     make_predrule_prompt,
     make_predtrace_prompt,
+    make_nl2rule_prompt,
+    make_rule2nl_prompt,
 )
 from .experiment_args import ExperimentArgs, Task
 from .prompts import system_prompt
@@ -96,7 +98,7 @@ class BaseRunner(ABC):
             {
                 key: value
                 for key, value in dt.items()
-                if key not in {"syntax", "semantics"}
+                if key not in {"syntax", "semantics", "semantics-glossary"}
             }
         )
         # query llm
@@ -131,6 +133,10 @@ class BaseRunner(ABC):
                 chat = make_predrule_prompt(self.args, dt)
             case Task.PredTrace:
                 chat = make_predtrace_prompt(self.args, dt)
+            case Task.NL2Rule:
+                chat = make_nl2rule_prompt(self.args, dt)
+            case Task.Rule2NL:
+                chat = make_rule2nl_prompt(self.args, dt)
             case _:
                 raise NotImplementedError(
                     f"Prompt for {str(self.args)} is not implemented yet."
