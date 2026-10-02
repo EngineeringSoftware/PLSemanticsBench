@@ -36,6 +36,20 @@ class PredTraceResults:
     pred_exe_trace: List[dict[str, str]] = field(default_factory=list)
     true_exe_trace: List[dict[str, str]] = field(default_factory=list)
 
+@dataclass
+class NL2RuleResults:
+    model_name: str = ""
+    malformed_cnt: int = 0
+    true_ans: List[int] = field(default_factory=list)
+    pred_ans: List[int] = field(default_factory=list)
+
+@dataclass
+class Rule2NLResults:
+    model_name: str = ""
+    malformed_cnt: int = 0
+    true_ans: List[int] = field(default_factory=list)
+    pred_ans: List[int] = field(default_factory=list)
+
 class LLMEvaluator:
 
     def __init__(self, task: Task, semantics_type: Semantics_Type):
@@ -226,6 +240,108 @@ class LLMEvaluator:
         #rof
         return model_result_by_pattern
     #fed
+
+    # NL2Rule
+    def _analyze_nl2rule_uk(
+        self,
+        results: List[dict],
+        model_name: str,
+    ) -> NL2RuleResults:
+        """
+        Collect results for nl2rule-uk task.
+        """
+        def extract_rule_number(s: str) -> int:
+            m = re.search(r"\brule\s*(\d+)\b", s, flags=re.IGNORECASE)
+            if not m:
+                raise ValueError(f"No rule number found in: {s!r}")
+            return int(m.group(1))
+        #fed
+        
+        analysis = NL2RuleResults(model_name=model_name)
+        for result in results:
+            pred = extract_nl2rule(llm_output=result["model-prediction"], tag="answer")
+            try:
+                pred = extract_rule_number(pred)
+            except:
+                analysis.malformed_cnt += 1
+                continue
+            #yrt
+            true = result["answer_index"]
+            analysis.true_ans.append(true)
+            analysis.pred_ans.append(pred)
+        #rof
+        return analysis
+
+    def _analyze_nl2rule_mk(
+        self,
+        results: List[dict],
+        model_name: str,
+    ) -> NL2RuleResults:
+        """
+        Collect results for nl2rule-mk task.
+        """
+        analysis_by_pattern = defaultdict(list)
+        for result in results:
+            analysis_by_pattern[result["mutation-pattern"]].append(result)
+        #rof
+
+        model_result_by_pattern = {}
+        for pattern, pattern_results in analysis_by_pattern.items():
+            model_result = self._analyze_nl2rule_uk(pattern_results, model_name)
+            model_result_by_pattern[pattern] = model_result
+        #
+        return model_result_by_pattern
+
+    # Rule2NL
+    def _analyze_rule2nl_uk(
+        self,
+        results: List[dict],
+        model_name: str,
+    ) -> Rule2NLResults:
+        """
+        Collect results for rule2nl-uk task.
+        """
+        def extract_rule_number(s: str) -> int:
+            m = re.search(r"\bdescription\s*(\d+)\b", s, flags=re.IGNORECASE)
+            if not m:
+                raise ValueError(f"No description number found in: {s!r}")
+            return int(m.group(1))
+        #fed
+        
+        analysis = Rule2NLResults(model_name=model_name)
+        for result in results:
+            pred = extract_rule2nl(llm_output=result["model-prediction"], tag="answer")
+            try:
+                pred = extract_rule_number(pred)
+            except:
+                analysis.malformed_cnt += 1
+                continue
+            #yrt
+            true = result["answer_index"]
+            analysis.true_ans.append(true)
+            analysis.pred_ans.append(pred)
+        #rof
+        return analysis
+
+    def _analyze_rule2nl_mk(
+        self,
+        results: List[dict],
+        model_name: str,
+    ) -> Rule2NLResults:
+        """
+        Collect results for rule2nl-mk task.
+        """
+        analysis_by_pattern = defaultdict(list)
+        for result in results:
+            analysis_by_pattern[result["mutation-pattern"]].append(result)
+        #rof
+
+        model_result_by_pattern = {}
+        for pattern, pattern_results in analysis_by_pattern.items():
+            model_result = self._analyze_rule2nl_uk(pattern_results, model_name)
+            model_result_by_pattern[pattern] = model_result
+        #
+        return model_result_by_pattern
 
     # Compute metrics
 
