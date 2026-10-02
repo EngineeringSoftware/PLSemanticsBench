@@ -263,7 +263,7 @@ class LLMEvaluator:
         
         analysis = NL2RuleResults(model_name=model_name)
         for result in results:
-            pred = extract_nl2rule(llm_output=result["model-prediction"], tag="answer")
+            pred = extract_nl2rule_rule2nl(result["model-prediction"])
             try:
                 pred = extract_rule_number(pred)
             except:
@@ -314,7 +314,7 @@ class LLMEvaluator:
         
         analysis = Rule2NLResults(model_name=model_name)
         for result in results:
-            pred = extract_rule2nl(llm_output=result["model-prediction"], tag="answer")
+            pred = extract_nl2rule_rule2nl(result["model-prediction"])
             try:
                 pred = extract_rule_number(pred)
             except:
@@ -454,4 +454,9 @@ def extract_predtrace(model_output: str) -> List[dict[str, int | dict[str, int]]
     except TaskParseError as e:
         return []
     #yrt
+#fed
+
+def extract_nl2rule_rule2nl(model_output: str) -> str | None:
+    """Extract the NL2Rule or Rule2NL result."""
+    return extract_content_between_tags(model_output, tag="answer")
 #fed
