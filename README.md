@@ -110,12 +110,12 @@ from plsemanticsbench import (
 # Model name
 model_name = "o3-mini"
 
-# Experiment args: Run the PredState task on the IMP language with
+# Experiment args: Run the PredState task on the C* language with
 # standard semantics formalized using SOS and with direct prompting
 exp_args = ExperimentArgs(
     dataset=PLDataset.Human_Written,
     task=Task.PredState,
-    language=Language.IMP,
+    language=Language.CSTAR,
     formalization=Formalization.SOS,
     semantics_type=Semantics_Type.Standard,
     model_name=model_name,
