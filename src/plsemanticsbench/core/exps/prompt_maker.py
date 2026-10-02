@@ -1,4 +1,5 @@
 from typing import List
+import textwrap
 
 from .experiment_args import ExperimentArgs, Semantics_Type
 from .prompts import PROMPT_STRATEGY
@@ -28,24 +29,24 @@ PROMPTS_DICT: dict = {
     # PredState
     "predstate-None-da": predstate_nk_prompt_da,
     "predstate-None-cot": predstate_nk_prompt_cot,
-    "predstate-SOS-da": predstate_sos_prompt_da,
-    "predstate-SOS-cot": predstate_sos_prompt_cot,
+    "predstate-S-da": predstate_sos_prompt_da,
+    "predstate-S-cot": predstate_sos_prompt_cot,
     "predstate-K-da": predstate_k_prompt_da,
     "predstate-K-cot": predstate_k_prompt_cot,
     # PredRule
-    "predrule-SOS-da": predrule_sos_prompt_da,
-    "predrule-SOS-cot": predrule_sos_prompt_cot,
+    "predrule-S-da": predrule_sos_prompt_da,
+    "predrule-S-cot": predrule_sos_prompt_cot,
     "predrule-K-da": predrule_k_prompt_da,
     "predrule-K-cot": predrule_k_prompt_cot,
     # PredTrace
-    "predtrace-SOS-da": predtrace_sos_prompt_da,
-    "predtrace-SOS-cot": predtrace_sos_prompt_cot,
+    "predtrace-S-da": predtrace_sos_prompt_da,
+    "predtrace-S-cot": predtrace_sos_prompt_cot,
     "predtrace-K-da": predtrace_k_prompt_da,
     "predtrace-K-cot": predtrace_k_prompt_cot,
     # Formal Notation Comprehension
-    "nl2rule-SOS-da": formal_notation_comprehension_sos_nl2rule,
+    "nl2rule-S-da": formal_notation_comprehension_sos_nl2rule,
     "nl2rule-K-da": formal_notation_comprehension_k_nl2rule,
-    "rule2nl-SOS-da": formal_notation_comprehension_sos_rule2nl,
+    "rule2nl-S-da": formal_notation_comprehension_sos_rule2nl,
     "rule2nl-K-da": formal_notation_comprehension_k_rule2nl,
 }
 

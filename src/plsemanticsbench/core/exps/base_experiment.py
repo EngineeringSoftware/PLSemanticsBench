@@ -53,7 +53,8 @@ class BaseRunner(ABC):
         Load the dataset from huggingface
         """
         print(f"Loading dataset for experiment args {str(self.args)} ....")
-        dataset = load_dataset("EngineeringSoftware/PLSemanticsBench", name=self.args.get_hf_split_name())
+        hf_subset, hf_split = self.args.get_hf_split_name().split("/")
+        dataset = load_dataset("EngineeringSoftware/PLSemanticsBench", name=hf_subset)[hf_split]
         num_datapoints_to_run: int = 0
         if self.args.num_datapoints_to_run == -1:
             num_datapoints_to_run = len(dataset)

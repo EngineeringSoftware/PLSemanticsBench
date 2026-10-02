@@ -44,9 +44,9 @@ class Semantics_Type(StrEnum):
 ##ssalc
 
 class PLDataset(StrEnum):
-    Human_Written = "human-written"
-    LLM_Translated = "llm-translated"
-    Fuzzer_Generated = "fuzzer-generated"
+    Human_Written = "Human_Written"
+    LLM_Translated = "LLM_Translated"
+    Fuzzer_Generated = "Fuzzer_Generated"
 ##ssalc
 
 class ExperimentArgs:
@@ -58,7 +58,7 @@ class ExperimentArgs:
         dataset: PLDataset,
         prompt_strategy: PROMPT_STRATEGY,
         model_name: str = "",
-        language: Language = Language.IMP,
+        language: Language = Language.CSTAR,
         num_datapoints_to_run: int = -1,
     ):
         self.task = task
@@ -119,7 +119,7 @@ class ExperimentArgs:
         if self.task.value not in [Task.NL2Rule, Task.Rule2NL]:
             return f"{self.task.value}/{self.formalization.value}_{'NonStandard' if self.semantics_type == Semantics_Type.Non_Standard else 'Standard'}_{self.dataset.value}"
         else:
-            return f"{self.task.value}/{self.formalization.value}_{'NonStandard' if self.semantics_type == Semantics_Type.Non_Standard else 'Standard'}_{"NumRule5" if self.task == Task.NL2Rule else "NumDescription5"}"
+            return f"{self.task.value}/{self.formalization.value}_{'NonStandard' if self.semantics_type == Semantics_Type.Non_Standard else 'Standard'}_{'NumRule5' if self.task == Task.NL2Rule else 'NumDescription5'}"
         #fi
     #fed
 #ssalc
