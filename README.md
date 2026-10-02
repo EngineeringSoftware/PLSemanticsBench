@@ -156,13 +156,13 @@ You can load the dataset using the `datasets` library. Here is an example:
 from datasets import load_dataset
 
 # Load PredState task with standard semantics under K formalization for the LLM Translated dataset
-predstate_K_standard_llm_translated = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predstate/K_Standard_LLM_Translated")
+predstate_K_standard_llm_translated = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predstate")["K_Standard_LLM_Translated"]
 
 # Load PredRule task with nonstandard semantics under S formalization for the Human Written dataset
-predrule_S_nonstandard_human_written = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predrule/S_NonStandard_Human_Written")
+predrule_S_nonstandard_human_written = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predrule")["S_NonStandard_Human_Written"]
 
 # Load nl2rule task with standard semantics under S formalization
-nl2rule_S_standard = load_dataset("EngineeringSoftware/PLSemanticsBench", name="nl2rule/S_Standard_NumRule5")
+nl2rule_S_standard = load_dataset("EngineeringSoftware/PLSemanticsBench", name="nl2rule")["S_Standard_NumRule5"]
 ```
 
 ### Splits
