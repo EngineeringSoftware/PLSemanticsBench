@@ -26,7 +26,7 @@ class Language(StrEnum):
 class Formalization(StrEnum):
     NONE = "None"
     K = "K"
-    SOS = "SOS"
+    SOS = "S"
 #ssalc
 
 class Task(StrEnum):
@@ -77,10 +77,10 @@ class ExperimentArgs:
         task: str,
         formalization: str,
         semantics_type: str,
-        dataset: str,
         prompt_strategy: str,
         model_name: str,
         language: str,
+        dataset: str = None,
         num_datapoints_to_run: int = -1,            
     ):
         return ExperimentArgs(
@@ -116,9 +116,10 @@ class ExperimentArgs:
             raise ConfigError(f"Semantics type must be {Semantics_Type.No_Semantics.value} when formalization is {Formalization.NONE.value}")
         #fi
 
-        if self.formalization == Formalization.NONE:
-            return f"{self.task.value}-{self.language.value}-{self.semantics_type.value}-{self.dataset.value}"
+        if self.task.value not in [Task.NL2Rule, Task.Rule2NL]:
+            return f"{self.task.value}/{self.formalization.value}_{'NonStandard' if self.semantics_type == Semantics_Type.Non_Standard else 'Standard'}_{self.dataset.value}"
+        else:
+            return f"{self.task.value}/{self.formalization.value}_{'NonStandard' if self.semantics_type == Semantics_Type.Non_Standard else 'Standard'}_{"NumRule5" if self.task == Task.NL2Rule else "NumDescription5"}"
         #fi
-        return f"{self.task.value}-{self.language.value}-{self.formalization.value}-{self.semantics_type.value}-{self.dataset.value}"
     #fed
 #ssalc
