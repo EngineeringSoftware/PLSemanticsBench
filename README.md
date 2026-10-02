@@ -161,8 +161,8 @@ predstate_K_standard_llm_translated = load_dataset("EngineeringSoftware/PLSemant
 # Load PredRule task with nonstandard semantics under S formalization for the Human Written dataset
 predrule_S_nonstandard_human_written = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predrule/S_NonStandard_Human_Written")
 
-# Load PredState task with standard semantics but without explicitly providing the formal semantics rules, for the Fuzzer Generated dataset
-predstate_none_fuzzer_generated = load_dataset("EngineeringSoftware/PLSemanticsBench", name="predstate/None_Fuzzer_Generated")
+# Load nl2rule task with standard semantics under S formalization
+nl2rule_S_standard = load_dataset("EngineeringSoftware/PLSemanticsBench", name="nl2rule/S_Standard_NumRule5")
 ```
 
 ### Splits
@@ -174,11 +174,7 @@ predstate_none_fuzzer_generated = load_dataset("EngineeringSoftware/PLSemanticsB
     <th>Description</th>
   </tr>
   <tr>
-    <td rowspan="5">✨ <strong>PredState</strong><br>(Final State Prediction)</td>
-    <td> predstate/None_{dataset-name} </td>
-    <td> No semantics </td>
-  </tr>
-  <tr>
+    <td rowspan="4">✨ <strong>PredState</strong><br>(Final State Prediction)</td>
     <td> predstate/K_Standard_{dataset-name} </td>
     <td>Standard semantics with K formalization</td>
   </tr>
