@@ -20,7 +20,7 @@ def to_exp_enum(enum_cls, enum_str: str):
 
 
 class Language(StrEnum):
-    IMP = "IMP"
+    CSTAR = "C*"
 #ssalc
 
 class Formalization(StrEnum):
