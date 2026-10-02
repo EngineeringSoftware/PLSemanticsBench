@@ -63,6 +63,10 @@ class LLMEvaluator:
         "predrule-mk" : (self._analyze_predrule_mk,  [self._evaluate_predrule_task, self.handle_non_standard_results]),
         "predtrace-uk": (self._analyze_predtrace_uk, [self._evaluate_predtrace_task, self.handle_standard_results]),
         "predtrace-mk": (self._analyze_predtrace_mk, [self._evaluate_predtrace_task, self.handle_non_standard_results]),
+        "nl2rule-uk": (self._analyze_nl2rule_uk, [self._evaluate_nl2rule_rule2nl_task, self.handle_standard_results]),
+        "nl2rule-mk": (self._analyze_nl2rule_mk, [self._evaluate_nl2rule_rule2nl_task, self.handle_non_standard_results]),
+        "rule2nl-uk": (self._analyze_rule2nl_uk, [self._evaluate_nl2rule_rule2nl_task, self.handle_standard_results]),
+        "rule2nl-mk": (self._analyze_rule2nl_mk, [self._evaluate_nl2rule_rule2nl_task, self.handle_non_standard_results]),
     }
     #fed
 
@@ -388,6 +392,16 @@ class LLMEvaluator:
             "xmatch-accuracy": mean(xmatch_scores),
             "malformed-count": results.malformed_cnt,
         }
+        return metrics_dict
+    #fed
+
+    def _evaluate_nl2rule_rule2nl_task(self, results: NL2RuleResults | Rule2NLResults) -> dict:
+        """Computes and prints various evaluation metrics for NL2Rule or Rule2NL task."""
+        metrics_dict = {
+            "accuracy": mean([t == p for t, p in zip(results.true_ans, results.pred_ans)]),
+            "malformed-count": results.malformed_cnt,
+        }
+
         return metrics_dict
     #fed
 
