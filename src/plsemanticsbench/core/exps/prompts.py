@@ -540,6 +540,137 @@ Only output the `<answer>` XML block. Do not include explanations, comments, or 
 """
 )
 
+
+
+
+NL2RULE_SOS_TASK = textwrap.dedent(
+  """TASK:
+You will be given a set of {num_rules} rules from the small-step operational semantics of {language}
+along with a natural language description of exactly **one** of those rules.
+Your task is to identify which rule correctly captures the operational behavior of the given natural language description.
+
+    Below is the glossary explaining the symbols and metavariables used in the small-step operational semantics rules:
+    ```
+    {semantics_glossary}
+    ```
+
+    Here is the set of {num_rules} small-step operational semantics rules:
+    ```
+{rules}
+    ```
+
+    Here is the natural language description of **one** of the given small-step operational semantics rules:
+    ```
+    {description}
+    ```
+
+# Note 1: Only one of the rules will match the natural language description.
+# Note 2: You must only use the rules provided and the natural language description to identify the rule.
+# Note 3: Assume that all the rules and the natural language description given are correct.
+# Note 4: You should not select a rule solely based on surface syntax or keyword matching; the choice must be based on the operational semantics behavior described in the natural language description.
+# Note 5: You must wrap your final answer with `<answer>` tags.
+    
+For example if `Rule X` matches the natural language description, then your response should be:
+```
+<answer>Rule X</answer>
+```""")
+
+NL2RULE_K_TASK = textwrap.dedent(
+  """TASK:
+You will be given a set of {num_rules} rules from the K-framework semantics of {language}
+along with a natural language description of exactly **one** of those rules.
+Your task is to identify which rule correctly captures the operational behavior of the given natural language description.
+
+    Below is the glossary explaining the configuration of the K-cell and auxiliary rules and functions used in the K-framework semantics rules:
+    ```
+    {semantics_glossary}
+    ```
+
+    Here is the set of {num_rules} K-framework semantics rules:
+    ```
+{rules}
+    ```
+
+    Here is the natural language description of **one** of the given K-framework semantics rules:
+    ```
+    {description}
+    ```
+
+# Note 1: Only one of the rules will match the natural language description.
+# Note 2: You must only use the rules provided and the natural language description to identify the rule.
+# Note 3: Assume that all the rules and the natural language description given are correct.
+# Note 4: You should not select a rule solely based on surface syntax or keyword matching; the choice must be based on the K-framework semantics behavior described in the natural language description.
+# Note 5: You must wrap your final answer with `<answer>` tags.
+    
+For example if `Rule X` matches the natural language description, then your response should be:
+```
+<answer>Rule X</answer>
+```""")
+
+RULE2NL_SOS_TASK = textwrap.dedent(
+  """TASK:
+You will be given a set of {num_descriptions} natural language descriptions of unique rules from the small-step 
+operational semantics of {language} along with exactly **one** small-step operational semantics rule.
+Your task is to identify which natural language description correctly captures the operational behavior of the given small-step operational semantics rule.
+
+    Below is the glossary explaining the symbols and metavariables used in the small-step operational semantics rules:
+    ```
+    {semantics_glossary}
+    ```
+
+    Here is the set of {num_descriptions} natural language descriptions of unique small-step operational semantics rules:
+    ```
+{descriptions}
+    ```
+
+    Here is the small-step operational semantics rule:
+    ```
+    {rule}
+    ```
+
+# Note 1: Only one of the natural language descriptions will match the given rule.
+# Note 2: You must only use the natural language descriptions provided and the given rule to identify the natural language description.
+# Note 3: Assume that all the natural language descriptions and the given rule are correct.
+# Note 4: You should not select a natural language description solely based on surface syntax or keyword matching; the choice must be based on the operational semantics behavior described in the given rule.
+# Note 5: You must wrap your final answer with `<answer>` tags.
+    
+For example if `Description X` matches the given small-step operational semantics rule, then your response should be:
+```
+<answer>Description X</answer>
+```""")
+
+RULE2NL_K_TASK = textwrap.dedent(
+  """TASK:
+You will be given a set of {num_descriptions} natural language descriptions of unique rules from the K-framework 
+semantics of {language} along with exactly **one** K-framework semantics rule.
+Your task is to identify which natural language description correctly captures the operational behavior of the given K-framework semantics rule.
+
+    Below is the glossary explaining the configuration of the K-cell and auxiliary rules and functions used in the K-framework semantics rules:
+    ```
+    {semantics_glossary}
+    ```
+
+    Here is the set of {num_descriptions} natural language descriptions of unique K-framework semantics rules:
+    ```
+{descriptions}
+    ```
+
+    Here is the K-framework semantics rule:
+    ```
+    {rule}
+    ```
+
+# Note 1: Only one of the natural language descriptions will match the given rule.
+# Note 2: You must only use the natural language descriptions provided and the given rule to identify the natural language description.
+# Note 3: Assume that all the natural language descriptions and the given rule are correct.
+# Note 4: You should not select a natural language description solely based on surface syntax or keyword matching; the choice must be based on the K-framework semantics behavior described in the given rule.
+# Note 5: You must wrap your final answer with `<answer>` tags.
+    
+For example if `Description X` matches the given K-framework semantics rule, then your response should be:
+```
+<answer>Description X</answer>
+```""")
+
 # ============================================================================
 # Prompt Templates
 # ============================================================================
@@ -589,6 +720,26 @@ PREDRULE_QUESTIONS = """
 
 """
 
+FORMAL_NOTATION_COMPREHENSION_SOS = textwrap.dedent(
+  """I have defined the syntax and the semantics of a programming language called {language} formally using EBNF and small-step operational semantics.
+    
+    Here is the EBNF syntax of {language}:
+    ```
+{syntax}
+    ```
+
+""")
+
+FORMAL_NOTATION_COMPREHENSION_K = textwrap.dedent(
+  """I have defined the syntax and the semantics of a programming language called {language} formally using the K-framework.
+    
+    Here is the K-framework syntax of {language}:
+    ```
+{syntax}
+    ```
+
+""")
+
 
 # PredState Prompts
 predstate_nk_prompt_da   = BASE_PROMPT_TEMPLATE_NO_SEMANTICS + INCLUDE_PROGRAM + predstate_task_da_desc
@@ -609,3 +760,10 @@ predtrace_sos_prompt_da  =  BASE_PROMPT_TEMPLATE_SOS_SEMANTICS + INCLUDE_PROGRAM
 predtrace_sos_prompt_cot =  BASE_PROMPT_TEMPLATE_SOS_SEMANTICS + INCLUDE_PROGRAM + predtrace_task_cot_desc_sos
 predtrace_k_prompt_da    =  BASE_PROMPT_TEMPLATE_K_SEMANTICS + INCLUDE_PROGRAM + predtrace_task_da_desc_k
 predtrace_k_prompt_cot   =  BASE_PROMPT_TEMPLATE_K_SEMANTICS + INCLUDE_PROGRAM + predtrace_task_cot_desc_k
+
+
+# Formal Notation Comprehension Prompts
+formal_notation_comprehension_sos_nl2rule = FORMAL_NOTATION_COMPREHENSION_SOS + NL2RULE_SOS_TASK
+formal_notation_comprehension_k_nl2rule = FORMAL_NOTATION_COMPREHENSION_K + NL2RULE_K_TASK
+formal_notation_comprehension_sos_rule2nl = FORMAL_NOTATION_COMPREHENSION_SOS + RULE2NL_SOS_TASK
+formal_notation_comprehension_k_rule2nl = FORMAL_NOTATION_COMPREHENSION_K + RULE2NL_K_TASK
