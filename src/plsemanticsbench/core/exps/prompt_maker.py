@@ -17,6 +17,10 @@ from .prompts import (
     predtrace_sos_prompt_cot,
     predtrace_k_prompt_da,
     predtrace_k_prompt_cot,
+    formal_notation_comprehension_sos_nl2rule,
+    formal_notation_comprehension_k_nl2rule,
+    formal_notation_comprehension_sos_rule2nl,
+    formal_notation_comprehension_k_rule2nl,
     PREDRULE_QUESTIONS,
 )
 
@@ -38,6 +42,11 @@ PROMPTS_DICT: dict = {
     "predtrace-SOS-cot": predtrace_sos_prompt_cot,
     "predtrace-K-da": predtrace_k_prompt_da,
     "predtrace-K-cot": predtrace_k_prompt_cot,
+    # Formal Notation Comprehension
+    "nl2rule-SOS-da": formal_notation_comprehension_sos_nl2rule,
+    "nl2rule-K-da": formal_notation_comprehension_k_nl2rule,
+    "rule2nl-SOS-da": formal_notation_comprehension_sos_rule2nl,
+    "rule2nl-K-da": formal_notation_comprehension_k_rule2nl,
 }
 
 SEMANTICS_MUTATIONS = {
@@ -147,52 +156,63 @@ def make_predrule_prompt(args: ExperimentArgs, dt: dict) -> List[dict[str, str]]
     """Prepare the prompt for the PredRule task."""
     prompt_template: str = PROMPTS_DICT[f"{args.task.value}-{args.formalization.value}-{args.prompt_strategy.value}"]
     program: str = dt["program"] if "standard" in dt["mutation-pattern"] else dt["mutated-program"]
-    if "KeywordSwap" in dt["mutation-pattern"]:
-        prompt: str = prompt_template.format(
-            language=dt["language"],
-            syntax=dt["syntax"],
-            semantics=dt["semantics"],
-            questions=_prepare_predrule_questions(dt, program),
-            LTEQ_OP=SEMANTICS_MUTATIONS["KeywordSwap"]["LTEQ_OP"],
-            NOT_OP="!",
-            ERROR="ERROR",
-            HALT="halt",
-            WHILE="while",
-            LOOP="loop",
-            IF="if",
-            ELSE="else",
-        )
-    elif "KeywordObf" in dt["mutation-pattern"]:
-        prompt: str = prompt_template.format(
-            language=dt["language"],
-            syntax=dt["syntax"],
-            semantics=dt["semantics"],
-            questions=_prepare_predrule_questions(dt, program),
-            LTEQ_OP=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["LTEQ_OP"],
-            NOT_OP=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["NOT_OP"],
-            ERROR=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["ERROR"],
-            HALT=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["HALT"],
-            WHILE=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["WHILE"],
-            LOOP=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["LOOP"],
-            IF=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["IF"],
-            ELSE=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["ELSE"],
-        )
-    else:
-        prompt: str = prompt_template.format(
-            language=dt["language"],
-            syntax=dt["syntax"],
-            semantics=dt["semantics"],
-            questions=_prepare_predrule_questions(dt, program),
-            LTEQ_OP="<=",
-            NOT_OP="!",
-            ERROR="ERROR",
-            HALT="halt",
-            WHILE="while",
-            LOOP="loop",
-            IF="if",
-            ELSE="else",
-        )
-    #fi
+    match args.semantics_type:
+        case  Semantics_Type.Non_Standard:
+            if "KeywordSwap" in dt["mutation-pattern"]:
+                prompt: str = prompt_template.format(
+                    language=dt["language"],
+                    syntax=dt["syntax"],
+                    semantics=dt["semantics"],
+                    questions=_prepare_predrule_questions(dt, program),
+                    LTEQ_OP=SEMANTICS_MUTATIONS["KeywordSwap"]["LTEQ_OP"],
+                    NOT_OP="!",
+                    ERROR="ERROR",
+                    HALT="halt",
+                    WHILE="while",
+                    LOOP="loop",
+                    IF="if",
+                    ELSE="else",
+                )
+            elif "KeywordObf" in dt["mutation-pattern"]:
+                prompt: str = prompt_template.format(
+                    language=dt["language"],
+                    syntax=dt["syntax"],
+                    semantics=dt["semantics"],
+                    questions=_prepare_predrule_questions(dt, program),
+                    LTEQ_OP=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["LTEQ_OP"],
+                    NOT_OP=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["NOT_OP"],
+                    ERROR=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["ERROR"],
+                    HALT=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["HALT"],
+                    WHILE=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["WHILE"],
+                    LOOP=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["LOOP"],
+                    IF=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["IF"],
+                    ELSE=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["ELSE"],
+                )
+            else:
+                raise NotImplementedError(f"Unsupported non-standard semantics {dt['mutation-pattern']}")
+            #fi
+        case  Semantics_Type.Standard:
+            if "Standard" in dt["mutation-pattern"]:
+                prompt: str = prompt_template.format(
+                    language=dt["language"],
+                    syntax=dt["syntax"],
+                    semantics=dt["semantics"],
+                    questions=_prepare_predrule_questions(dt, program),
+                    LTEQ_OP="<=",
+                    NOT_OP="!",
+                    ERROR="ERROR",
+                    HALT="halt",
+                    WHILE="while",
+                    LOOP="loop",
+                    IF="if",
+                    ELSE="else",
+                )
+            else:
+                raise NotImplementedError(f"Unsupported standard semantics {dt['mutation-pattern']}")
+            #fi
+        case _:
+            raise NotImplementedError(f"Unsupported semantics type {args.semantics_type}")
+        #hctam
     chat: List[dict[str, str]] = [{"role": "user", "content": prompt}]
     return chat
 #fed
@@ -201,52 +221,165 @@ def make_predtrace_prompt(args: ExperimentArgs, dt: dict) -> List[dict[str, str]
     """Prepare prompt for the PredTrace task."""
     prompt_template: str = PROMPTS_DICT[f"{args.task.value}-{args.formalization.value}-{args.prompt_strategy.value}"]
     program: str = dt["program"] if "standard" in dt["mutation-pattern"] else dt["mutated-program"]
-    if "KeywordSwap" in dt["mutation-pattern"]:
-        prompt = prompt_template.format(
-            language=dt["language"],
-            syntax=dt["syntax"],
-            semantics=dt["semantics"],
-            program=program,
-            ERROR="ERROR",
-            HALT="halt",
-            WHILE="while",
-            ASSIGN_OP="=",
-            LT_OP=SEMANTICS_MUTATIONS["KeywordSwap"]["LT_OP"],
-            PLUS_OP=SEMANTICS_MUTATIONS["KeywordSwap"]["PLUS_OP"],
-            IF="if",
-            ELSE="else",
-        )
-    elif "KeywordObf" in dt["mutation-pattern"]:
-        prompt = prompt_template.format(
-            language=dt["language"],
-            syntax=dt["syntax"],
-            semantics=dt["semantics"],
-            program=program,
-            ERROR=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["ERROR"],
-            HALT=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["HALT"],
-            WHILE=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["WHILE"],
-            ASSIGN_OP=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["ASSIGN_OP"],
-            LT_OP=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["LT_OP"],
-            PLUS_OP=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["PLUS_OP"],
-            IF=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["IF"],
-            ELSE=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["ELSE"],
-        )
-    else:
-        prompt = prompt_template.format(
-            language=dt["language"],
-            syntax=dt["syntax"],
-            semantics=dt["semantics"],
-            program=program,
-            ERROR="ERROR",
-            HALT="halt",
-            WHILE="while",
-            ASSIGN_OP="=",
-            LT_OP="<",
-            PLUS_OP="+",
-            IF="if",
-            ELSE="else",
-        )
-    #fi
+    match args.semantics_type:
+        case  Semantics_Type.Non_Standard:
+            if "KeywordSwap" in dt["mutation-pattern"]:
+                prompt = prompt_template.format(
+                    language=dt["language"],
+                    syntax=dt["syntax"],
+                    semantics=dt["semantics"],
+                    program=program,
+                    ERROR="ERROR",
+                    HALT="halt",
+                    WHILE="while",
+                    ASSIGN_OP="=",
+                    LT_OP=SEMANTICS_MUTATIONS["KeywordSwap"]["LT_OP"],
+                    PLUS_OP=SEMANTICS_MUTATIONS["KeywordSwap"]["PLUS_OP"],
+                    IF="if",
+                    ELSE="else",
+                )
+            elif "KeywordObf" in dt["mutation-pattern"]:
+                prompt = prompt_template.format(
+                    language=dt["language"],
+                    syntax=dt["syntax"],
+                    semantics=dt["semantics"],
+                    program=program,
+                    ERROR=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["ERROR"],
+                    HALT=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["HALT"],
+                    WHILE=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["WHILE"],
+                    ASSIGN_OP=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["ASSIGN_OP"],
+                    LT_OP=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["LT_OP"],
+                    PLUS_OP=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["PLUS_OP"],
+                    IF=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["IF"],
+                    ELSE=DatasetProcessor.SEMANTICS_MUTATIONS["KeywordObf"]["ELSE"],
+                )
+            else:
+                raise NotImplementedError(f"Unsupported non-standard semantics {dt['mutation-pattern']}")
+            #fi
+        case  Semantics_Type.Standard:
+            if "Standard" in dt["mutation-pattern"]:
+                prompt = prompt_template.format(
+                    language=dt["language"],
+                    syntax=dt["syntax"],
+                    semantics=dt["semantics"],
+                    program=program,
+                    ERROR="ERROR",
+                    HALT="halt",
+                    WHILE="while",
+                    ASSIGN_OP="=",
+                    LT_OP="<",
+                    PLUS_OP="+",
+                    IF="if",
+                    ELSE="else",
+                )
+            else:
+                raise NotImplementedError(f"Unsupported standard semantics {dt['mutation-pattern']}")
+            #fi
+        case _:
+            raise NotImplementedError(f"Unsupported semantics type {args.semantics_type}")
+    #hctam
+    chat = [{"role": "user", "content": prompt}]
+    return chat
+#fed
+
+def make_rule2nl_prompt(args: ExperimentArgs, dt: dict) -> List[dict]:
+    prompt_template: str = PROMPTS_DICT[f"{args.task.value}-{args.formalization.value}-{args.prompt_strategy.value}"]
+    match args.semantics_type:
+        case  Semantics_Type.Non_Standard:
+            if "KeywordSwap" in dt["mutation-pattern"]:
+                prompt = prompt_template.format(
+                    language=dt["language"],
+                    syntax=textwrap.indent(dt["syntax"], "    "),
+                    semantics_glossary=dt["semantics-glossary"],
+                    num_descriptions=len(dt["options"]),
+                    descriptions=textwrap.indent("\n\n".join(dt["options"]), "    "),
+                    rule=dt["question"],
+                    ERROR="ERROR",
+                    HALT="halt",
+                )
+            elif "KeywordObf" in dt["mutation-pattern"]:
+                prompt = prompt_template.format(
+                    language=dt["language"],
+                    syntax=textwrap.indent(dt["syntax"], "    "),
+                    semantics_glossary=dt["semantics-glossary"],
+                    num_descriptions=len(dt["options"]),
+                    descriptions=textwrap.indent("\n\n".join(dt["options"]), "    "),
+                    rule=dt["question"],
+                    ERROR=SEMANTICS_MUTATIONS["KeywordObf"]["ERROR"],
+                    HALT=SEMANTICS_MUTATIONS["KeywordObf"]["HALT"],
+                )
+            else:
+                raise NotImplementedError(f"Unsupported non-standard semantics {dt['mutation-pattern']}")
+            #fi
+        case  Semantics_Type.Standard:
+            if "Standard" in dt["mutation-pattern"]:
+                prompt = prompt_template.format(
+                    language=dt["language"],
+                    syntax=textwrap.indent(dt["syntax"], "    "),
+                    semantics_glossary=dt["semantics-glossary"],
+                    num_descriptions=len(dt["options"]),
+                    descriptions=textwrap.indent("\n\n".join(dt["options"]), "    "),
+                    rule=dt["question"],
+                    ERROR="ERROR",
+                    HALT="halt",
+                )
+            else:
+                raise NotImplementedError(f"Unsupported standard semantics {dt['mutation-pattern']}")
+            #fi
+        case _:
+            raise NotImplementedError(f"Unsupported semantics type {args.semantics_type}")
+    #hctam
+    chat = [{"role": "user", "content": prompt}]
+    return chat
+
+
+def make_nl2rule_prompt(args: ExperimentArgs, dt: dict) -> List[dict]:
+    prompt_template: str = PROMPTS_DICT[f"{args.task.value}-{args.formalization.value}-{args.prompt_strategy.value}"]
+    match args.semantics_type:
+        case  Semantics_Type.Non_Standard:
+            if "KeywordSwap" in dt["mutation-pattern"]:
+                prompt = prompt_template.format(
+                    language=dt["language"],
+                    syntax=textwrap.indent(dt["syntax"], "    "),
+                    semantics_glossary=dt["semantics-glossary"],
+                    num_rules=len(dt["options"]),
+                    rules=textwrap.indent("\n\n".join(dt["options"]), "    "),
+                    description=dt["question"],
+                    ERROR="ERROR",
+                    HALT="halt",
+                )
+            elif "KeywordObf" in dt["mutation-pattern"]:
+                prompt = prompt_template.format(
+                    language=dt["language"],
+                    syntax=textwrap.indent(dt["syntax"], "    "),
+                    semantics_glossary=dt["semantics-glossary"],
+                    num_rules=len(dt["options"]),
+                    rules=textwrap.indent("\n\n".join(dt["options"]), "    "),
+                    description=dt["question"],
+                    ERROR=SEMANTICS_MUTATIONS["KeywordObf"]["ERROR"],
+                    HALT=SEMANTICS_MUTATIONS["KeywordObf"]["HALT"],
+                )
+            else:
+                raise NotImplementedError(f"Unsupported non-standard semantics {dt['mutation-pattern']}")
+            #fi
+        case  Semantics_Type.Standard:
+            if "Standard" in dt["mutation-pattern"]:
+                prompt = prompt_template.format(
+                    language=dt["language"],
+                    syntax=textwrap.indent(dt["syntax"], "    "),
+                    semantics_glossary=dt["semantics-glossary"],
+                    num_rules=len(dt["options"]),
+                    rules=textwrap.indent("\n\n".join(dt["options"]), "    "),
+                    description=dt["question"],
+                    ERROR="ERROR",
+                    HALT="halt",
+                )
+            else:
+                raise NotImplementedError(f"Unsupported standard semantics {dt['mutation-pattern']}")
+            #fi
+        case _:
+            raise NotImplementedError(f"Unsupported semantics type {args.semantics_type}")
+    #hctamS
     chat = [{"role": "user", "content": prompt}]
     return chat
 #fed

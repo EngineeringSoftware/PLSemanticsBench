@@ -33,6 +33,8 @@ class Task(StrEnum):
     PredState = "predstate"
     PredRule = "predrule"
     PredTrace = "predtrace"
+    NL2Rule = "nl2rule"
+    Rule2NL = "rule2nl"
 #ssalc
 
 class Semantics_Type(StrEnum):
