@@ -1,0 +1,4 @@
+datasets>=4.0,<5
+spaces>=0.45
+torch==2.8.0
+transformers>=4.51,<6
