@@ -2080,3 +2080,261 @@ h1 {
 .hypotheses-grid span {
   color: var(--gold-text);
 }
+
+/* Interactive ZeroGPU demo */
+#try-it {
+  overflow: hidden;
+}
+
+#try-it .visual-topline a {
+  color: inherit;
+  text-transform: none;
+  text-underline-offset: 3px;
+}
+
+#try-it .semantics-tab[data-intervention="KeywordSwap"].active {
+  color: #3b1f1c;
+  background: linear-gradient(180deg, #e9aaa4, #d98f88);
+}
+
+#try-it .semantics-tab[data-intervention="KeywordObf"].active {
+  color: #241d3e;
+  background: linear-gradient(180deg, #c9c0eb, #afa3db);
+}
+
+.try-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(250px, .65fr);
+  gap: 12px;
+  margin: 0 12px 12px;
+}
+
+.try-editor {
+  min-width: 0;
+  border-color: rgba(214, 226, 242, 0.12);
+  background: #172231;
+}
+
+.try-editor .terminal-bar {
+  color: #dbe5ef;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.try-editor .terminal-bar strong {
+  margin-left: 6px;
+  font-size: 13px;
+}
+
+.terminal-action {
+  margin-left: auto;
+  border: 0;
+  color: #9fb0c4;
+  background: transparent;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.terminal-action:hover {
+  color: #ffffff;
+}
+
+#cstar-program {
+  display: block;
+  width: 100%;
+  min-height: 270px;
+  resize: vertical;
+  border: 0;
+  outline: 0;
+  padding: 18px 20px;
+  color: #e5edf5;
+  background: transparent;
+  font: 14px/1.65 "SFMono-Regular", "Cascadia Code", "Liberation Mono", Menlo, monospace;
+  tab-size: 4;
+}
+
+#cstar-program:focus {
+  box-shadow: inset 0 0 0 1px rgba(120, 197, 194, 0.65);
+}
+
+.try-side {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid rgba(214, 226, 242, 0.10);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.intervention-summary {
+  min-height: 92px;
+}
+
+.intervention-summary .micro-label {
+  color: var(--cyan-on-dark);
+}
+
+.intervention-summary p:last-child,
+.try-note {
+  color: #b4c1cf;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.try-select-label {
+  display: grid;
+  gap: 7px;
+  margin-top: 8px;
+  color: #9fb0c4;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.try-select-label select {
+  width: 100%;
+  min-width: 0;
+}
+
+.run-cstar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  border: 0;
+  border-radius: 9px;
+  padding: 11px 14px;
+  color: #172b32;
+  background: linear-gradient(180deg, #9ed9d6, #83c8c3);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 850;
+}
+
+.run-cstar:hover {
+  filter: brightness(1.06);
+}
+
+.run-cstar:disabled {
+  cursor: wait;
+  filter: saturate(.45);
+  opacity: .72;
+}
+
+.run-cstar.loading span {
+  animation: try-pulse .8s ease-in-out infinite alternate;
+}
+
+.try-note {
+  margin: 14px 0 0;
+  font-size: 11px;
+}
+
+.try-status {
+  margin-top: auto;
+  padding-top: 14px;
+  color: #9fb0c4;
+  font-size: 12px;
+}
+
+.try-result {
+  margin: 0 12px 12px;
+  border: 1px solid rgba(214, 226, 242, 0.10);
+  border-radius: 12px;
+  background: rgba(7, 14, 23, 0.34);
+  overflow: hidden;
+}
+
+.try-result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.try-result-grid > div {
+  min-width: 0;
+  padding: 17px;
+}
+
+.try-result-grid > div + div {
+  border-left: 1px solid rgba(214, 226, 242, 0.10);
+}
+
+.try-result .micro-label {
+  color: #9fb0c4;
+}
+
+.try-result pre {
+  max-height: 280px;
+  margin: 9px 0 0;
+  overflow: auto;
+  color: #e5edf5;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.try-result details {
+  border-top: 1px solid rgba(214, 226, 242, 0.10);
+}
+
+.try-result summary {
+  padding: 12px 17px;
+  color: #b4c1cf;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.try-result details pre {
+  margin: 0;
+  padding: 0 17px 17px;
+  color: #b9c6d4;
+}
+
+.run-details {
+  margin: 0;
+  padding: 10px 17px;
+  border-top: 1px solid rgba(214, 226, 242, 0.10);
+  color: #8fa0b3;
+  font-size: 10px;
+}
+
+@keyframes try-pulse {
+  from { transform: translateX(0); }
+  to { transform: translateX(4px); }
+}
+
+@media (max-width: 1050px) {
+  #try-it {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+@media (max-width: 790px) {
+  .try-grid,
+  .try-result-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .try-result-grid > div + div {
+    border-top: 1px solid rgba(214, 226, 242, 0.10);
+    border-left: 0;
+  }
+
+  .visual-id {
+    display: none;
+  }
+}
+
+@media (max-width: 540px) {
+  #try-it .semantics-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  #cstar-program {
+    min-height: 235px;
+    font-size: 12px;
+  }
+}

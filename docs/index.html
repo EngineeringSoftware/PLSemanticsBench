@@ -154,60 +154,76 @@
           </div>
         </div>
 
-        <div class="hero-visual" aria-label="Interactive semantics comparison">
+        <div
+          class="hero-visual"
+          id="try-it"
+          data-space-id="Auditt/PLSemanticsBench"
+          aria-label="Try C-star under different semantic interventions"
+        >
           <div class="visual-topline">
             <span class="live-dot"></span>
-            <span>Try it out (<a href="#benchmark" style="text-decoration: underline; color: inherit; text-transform: none;">PredState task</a>)!</span>
-            <span style="color: red;">COMING SOON</span>
-            <span class="visual-id">Powered by HuggingFace <img src="icons/hf-logo.png" alt="HuggingFace" class="hf-logo"> ZeroGPU</span>
+            <span>Try it yourself · <a href="#benchmark">PredState</a></span>
+            <span class="visual-id">Powered by Hugging Face <img src="icons/hf-logo.png" alt="" class="hf-logo"> ZeroGPU</span>
           </div>
 
-          <div class="semantics-tabs" role="tablist" aria-label="Choose semantics">
-            <button class="semantics-tab active" data-mode="standard" role="tab" aria-selected="true">Standard Semantics</button>
-            <button class="semantics-tab" data-mode="swap" role="tab" aria-selected="false">Counterfactual 1: Swap Symbols</button>
-            <button class="semantics-tab" data-mode="obf" role="tab" aria-selected="false">Counterfactual 2: Novel Symbols</button>
+          <div class="semantics-tabs" role="tablist" aria-label="Choose a semantic intervention">
+            <button class="semantics-tab active" data-intervention="Standard" role="tab" aria-selected="true">Standard</button>
+            <button class="semantics-tab" data-intervention="KeywordSwap" role="tab" aria-selected="false">KeywordSwap</button>
+            <button class="semantics-tab" data-intervention="KeywordObf" role="tab" aria-selected="false">KeywordObf</button>
           </div>
 
-          <div class="demo-section">
-            <div class="program-container">
-              <div class="task-terminal">
-                <div class="terminal-bar">
-                  <span></span><span></span><span></span>
-                  <strong>C<sup><small>★</small></sup> Program</strong>
-                </div>
-                <pre class="code"><span class="ln">1</span> <span class="kw">int</span> x;
-<span class="ln">2</span> x = (<label for="left-value" class="sr-only">Left operand</label><input id="left-value" class="code-input" type="number" value="2" inputmode="numeric"> <span id="program-operator" class="operator">+</span> <label for="right-value" class="sr-only">Right operand</label><input id="right-value" class="code-input" type="number" value="2" inputmode="numeric">);</pre>
-              </div>
-              <div class="answer-grid">
-                <div class="answer rule-answer task-terminal">
-                  <p class="micro-label">Faithful interpreter</p>
-                  <strong>x = <span id="semantic-answer">4</span></strong>
-                  <span class="answer-status good">follows semantics</span>
-                </div>
-                <div class="answer prior-answer task-terminal">
-                  <p class="micro-label">Prior-driven model</p>
-                  <strong>x = <span id="prior-answer">4</span></strong>
-                  <span id="prior-status" class="answer-status neutral">same answer</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="rule-window task-terminal">
+          <div class="try-grid">
+            <div class="try-editor task-terminal">
               <div class="terminal-bar">
-                <strong>C<sup><small>★</small></sup> Small-step Operational Semantics</strong>
+                <span></span><span></span><span></span>
+                <strong>Standard C<sup><small>★</small></sup> input</strong>
+                <button id="reset-cstar-program" class="terminal-action" type="button">Reset example</button>
               </div>
-              <div class="rule-card">
-                <div>
-                  <p class="micro-label rule-description">"<code>+</code>" Semantic Rule</p>
-                  <p id="rule-description" class="rule-description"><code>+</code> evaluates as integer addition.</p>
-                </div>
-                <div class="inference-rule" aria-label="Formal semantic rule">
-                  <span id="rule-premise">v₃ = v₁ + v₂</span>
-                  <span class="rule-line"></span>
-                  <span id="rule-conclusion">⟨v₁ <code>+</code> v₂, σ⟩ → ⟨v₃, σ⟩</span>
-                </div>
+              <label class="sr-only" for="cstar-program">C-star program</label>
+              <textarea id="cstar-program" maxlength="6000" spellcheck="false">int a;
+int b;
+int ans;
+a = 10;
+b = 3;
+ans = (a + b);</textarea>
+            </div>
+
+            <div class="try-side">
+              <div class="intervention-summary">
+                <p class="micro-label" id="intervention-label">Standard semantics</p>
+                <p id="intervention-description">Familiar symbols retain their conventional meanings.</p>
+              </div>
+              <label class="try-select-label" for="try-formalization">
+                Formalization
+                <select id="try-formalization">
+                  <option>Small-step (S)</option>
+                  <option>K semantics</option>
+                </select>
+              </label>
+              <button id="run-cstar" class="run-cstar" type="button">
+                Run model <span aria-hidden="true">→</span>
+              </button>
+              <p class="try-note">The app transforms your standard source and supplies the matching complete semantics from the dataset.</p>
+              <div id="try-status" class="try-status" role="status" aria-live="polite">Ready to run.</div>
+            </div>
+          </div>
+
+          <div id="try-result" class="try-result" hidden>
+            <div class="try-result-grid">
+              <div>
+                <p class="micro-label">Program sent to the model</p>
+                <pre id="transformed-program"></pre>
+              </div>
+              <div>
+                <p class="micro-label">Predicted final state</p>
+                <pre id="model-answer"></pre>
               </div>
             </div>
+            <details>
+              <summary>Show raw model output</summary>
+              <pre id="raw-model-output"></pre>
+            </details>
+            <p id="run-details" class="run-details"></p>
           </div>
         </div>
 
@@ -249,7 +265,7 @@
             <span class="step-num">Step 2</span>
             <h3>Change the meaning, keep the syntax</h3>
             <p>
-              Two systematic transformations of the standard C★ semantics preserve rule structure while perturbing the
+              Two systematic transformations of the standard C<sup><small>★</small></sup> semantics preserve rule structure while perturbing the
               symbol–meaning map: <strong>KeywordSwap</strong> creates direct conflict with priors; <strong>KeywordObf</strong>
               removes familiarity altogether.
             </p>
@@ -350,7 +366,7 @@
           </div>
           <h2>Four hypotheses, three tasks, two formalisms, three program splits.</h2>
           <p>
-            C★—a featherweight C with explicit block delimiters—is formalized in both fine-grained small-step
+            C<sup><small>★</small></sup>—a featherweight C with explicit block delimiters—is formalized in both fine-grained small-step
             operational semantics (𝕊) and coarser rewriting-based K semantics (𝕂). Ground truths come from executing
             each program under the transformed semantics with the K-framework and a custom interpreter.
           </p>
@@ -368,7 +384,7 @@
             <div class="pipeline-stage">
               <span class="stage-index">1</span>
               <div class="stage-icon syntax-icon" aria-hidden="true">{ }</div>
-              <h3>C★ program</h3>
+              <h3>C<sup><small>★</small></sup> program</h3>
               <p>Human-written, LLM-translated, or fuzzer-generated.</p>
             </div>
             <div class="pipeline-connector"><span>+</span></div>
@@ -456,7 +472,7 @@
                 <tr>
                   <td><strong>LLM-Translated</strong></td>
                   <td>165</td>
-                  <td>CodeForces C++ → C★ via Qwen2.5-Inst 32B</td>
+                  <td>CodeForces C++ → C<sup><small>★</small></sup> via Qwen2.5-Inst 32B</td>
                   <td>9</td><td>106</td><td>48</td><td>180</td>
                 </tr>
                 <tr>
@@ -685,5 +701,6 @@
   </main>
 
   <script src="script.js"></script>
+  <script type="module" src="try-it.js"></script>
 </body>
 </html>
